@@ -4,7 +4,7 @@ public class Organization
 {
     private int organizationID;
     private String organizationDescription;
-    private int addressID;
+    private Address address;
 
     public int getOrganizationID()
     {
@@ -26,14 +26,14 @@ public class Organization
         this.organizationDescription = organizationDescription;
     }
 
-    public int getAddressID()
+    public Address getAddress()
     {
-        return addressID;
+        return address;
     }
 
-    public void setAddressID(int addressID)
+    public void setAddress(Address address)
     {
-        this.addressID = addressID;
+        this.address = address;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class Organization
         int result = 1;
         result = prime * result + organizationID;
         result = prime * result + ((organizationDescription == null) ? 0 : organizationDescription.hashCode());
-        result = prime * result + addressID;
+        result = prime * result + ((address == null) ? 0 : address.hashCode());
         return result;
     }
 
@@ -66,7 +66,12 @@ public class Organization
         }
         else if (!organizationDescription.equals(other.organizationDescription))
             return false;
-        if (addressID != other.addressID)
+        if (address == null)
+        {
+            if (other.address != null)
+                return false;
+        }
+        else if (!address.equals(other.address))
             return false;
         return true;
     }

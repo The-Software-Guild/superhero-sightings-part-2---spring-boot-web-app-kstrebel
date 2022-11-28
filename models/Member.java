@@ -2,27 +2,27 @@ package models;
 
 public class Member
 {
-    private int heroID;
-    private int organizationID;
+    private Hero hero;
+    private Organization organization;
 
-    public int getHeroID()
+    public Hero getHero()
     {
-        return heroID;
+        return hero;
     }
 
-    public void setHeroID(int heroID)
+    public void setHero(Hero hero)
     {
-        this.heroID = heroID;
+        this.hero = hero;
     }
 
-    public int getOrganizationID()
+    public Organization getOrganization()
     {
-        return organizationID;
+        return organization;
     }
 
-    public void setOrganizationID(int organizationID)
+    public void setOrganization(Organization organization)
     {
-        this.organizationID = organizationID;
+        this.organization = organization;
     }
 
     @Override
@@ -30,8 +30,8 @@ public class Member
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + heroID;
-        result = prime * result + organizationID;
+        result = prime * result + ((hero == null) ? 0 : hero.hashCode());
+        result = prime * result + ((organization == null) ? 0 : organization.hashCode());
         return result;
     }
 
@@ -45,9 +45,19 @@ public class Member
         if (getClass() != obj.getClass())
             return false;
         Member other = (Member) obj;
-        if (heroID != other.heroID)
+        if (hero == null)
+        {
+            if (other.hero != null)
+                return false;
+        }
+        else if (!hero.equals(other.hero))
             return false;
-        if (organizationID != other.organizationID)
+        if (organization == null)
+        {
+            if (other.organization != null)
+                return false;
+        }
+        else if (!organization.equals(other.organization))
             return false;
         return true;
     }
