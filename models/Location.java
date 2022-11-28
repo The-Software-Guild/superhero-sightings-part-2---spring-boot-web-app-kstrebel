@@ -5,7 +5,7 @@ public class Location
     private int locationID;
     private String locationName;
     private String locationDescription;
-    private int addressID;
+    private Address address;
     private float locationLatitude;
     private float locationLongitude;
 
@@ -39,14 +39,14 @@ public class Location
         this.locationDescription = locationDescription;
     }
 
-    public int getAddressID()
+    public Address getAddress()
     {
-        return addressID;
+        return address;
     }
 
-    public void setAddressID(int addressID)
+    public void setAddress(Address address)
     {
-        this.addressID = addressID;
+        this.address = address;
     }
 
     public float getLocationLatitude()
@@ -77,7 +77,7 @@ public class Location
         result = prime * result + locationID;
         result = prime * result + ((locationName == null) ? 0 : locationName.hashCode());
         result = prime * result + ((locationDescription == null) ? 0 : locationDescription.hashCode());
-        result = prime * result + addressID;
+        result = prime * result + ((address == null) ? 0 : address.hashCode());
         result = prime * result + Float.floatToIntBits(locationLatitude);
         result = prime * result + Float.floatToIntBits(locationLongitude);
         return result;
@@ -109,7 +109,12 @@ public class Location
         }
         else if (!locationDescription.equals(other.locationDescription))
             return false;
-        if (addressID != other.addressID)
+        if (address == null)
+        {
+            if (other.address != null)
+                return false;
+        }
+        else if (!address.equals(other.address))
             return false;
         if (Float.floatToIntBits(locationLatitude) != Float.floatToIntBits(other.locationLatitude))
             return false;
@@ -117,5 +122,4 @@ public class Location
             return false;
         return true;
     }
-
 }

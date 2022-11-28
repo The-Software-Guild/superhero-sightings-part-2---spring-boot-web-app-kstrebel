@@ -4,28 +4,28 @@ import java.time.LocalDate;
 
 public class Sighting
 {
-    private int heroID;
-    private int locationID;
+    private Hero hero;
+    private Location location;
     private LocalDate dateOfSighting;
 
-    public int getHeroID()
+    public Hero getHero()
     {
-        return heroID;
+        return hero;
     }
 
-    public void setHeroID(int heroID)
+    public void setHero(Hero hero)
     {
-        this.heroID = heroID;
+        this.hero = hero;
     }
 
-    public int getLocationID()
+    public Location getLocation()
     {
-        return locationID;
+        return location;
     }
 
-    public void setLocationID(int locationID)
+    public void setLocation(Location location)
     {
-        this.locationID = locationID;
+        this.location = location;
     }
 
     public LocalDate getDateOfSighting()
@@ -43,8 +43,8 @@ public class Sighting
     {
         final int prime = 31;
         int result = 1;
-        result = prime * result + heroID;
-        result = prime * result + locationID;
+        result = prime * result + ((hero == null) ? 0 : hero.hashCode());
+        result = prime * result + ((location == null) ? 0 : location.hashCode());
         result = prime * result + ((dateOfSighting == null) ? 0 : dateOfSighting.hashCode());
         return result;
     }
@@ -59,9 +59,19 @@ public class Sighting
         if (getClass() != obj.getClass())
             return false;
         Sighting other = (Sighting) obj;
-        if (heroID != other.heroID)
+        if (hero == null)
+        {
+            if (other.hero != null)
+                return false;
+        }
+        else if (!hero.equals(other.hero))
             return false;
-        if (locationID != other.locationID)
+        if (location == null)
+        {
+            if (other.location != null)
+                return false;
+        }
+        else if (!location.equals(other.location))
             return false;
         if (dateOfSighting == null)
         {
@@ -72,5 +82,4 @@ public class Sighting
             return false;
         return true;
     }
-
 }
