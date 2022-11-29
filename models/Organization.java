@@ -3,12 +3,13 @@ package models;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Organization
 {
     private int organizationID;
     private String organizationDescription;
-    private Address address;
+    private int addressID;
 
     private List<Hero> members = new ArrayList<>();
 
@@ -40,53 +41,26 @@ public class Organization
         this.organizationDescription = organizationDescription;
     }
 
-    public Address getAddress()
+    public int getAddressID()
     {
-        return address;
+        return addressID;
     }
 
-    public void setAddress(Address address)
+    public void setAddressID(int addressID)
     {
-        this.address = address;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + organizationID;
-        result = prime * result + ((organizationDescription == null) ? 0 : organizationDescription.hashCode());
-        result = prime * result + ((address == null) ? 0 : address.hashCode());
-        return result;
+        this.addressID = addressID;
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Organization other = (Organization) obj;
-        if (organizationID != other.organizationID)
-            return false;
-        if (organizationDescription == null)
-        {
-            if (other.organizationDescription != null)
-                return false;
-        }
-        else if (!organizationDescription.equals(other.organizationDescription))
-            return false;
-        if (address == null)
-        {
-            if (other.address != null)
-                return false;
-        }
-        else if (!address.equals(other.address))
-            return false;
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return getOrganizationID() == that.getOrganizationID() && getAddressID() == that.getAddressID() && Objects.equals(getOrganizationDescription(), that.getOrganizationDescription()) && Objects.equals(getMembers(), that.getMembers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOrganizationID(), getOrganizationDescription(), getAddressID(), getMembers());
     }
 }
