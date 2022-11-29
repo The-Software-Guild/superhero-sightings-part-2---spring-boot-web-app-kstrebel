@@ -3,10 +3,13 @@ package models;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Organization
 {
     private int organizationID;
+
+    private String organizationName;
     private String organizationDescription;
     private Address address;
 
@@ -14,6 +17,14 @@ public class Organization
 
     public List<Hero> getMembers() {
         return members;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
     public void setMembers(List<Hero> members) {
@@ -51,42 +62,15 @@ public class Organization
     }
 
     @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + organizationID;
-        result = prime * result + ((organizationDescription == null) ? 0 : organizationDescription.hashCode());
-        result = prime * result + ((address == null) ? 0 : address.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return getOrganizationID() == that.getOrganizationID() && getOrganizationName().equals(that.getOrganizationName()) && getOrganizationDescription().equals(that.getOrganizationDescription()) && getAddress().equals(that.getAddress()) && getMembers().equals(that.getMembers());
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Organization other = (Organization) obj;
-        if (organizationID != other.organizationID)
-            return false;
-        if (organizationDescription == null)
-        {
-            if (other.organizationDescription != null)
-                return false;
-        }
-        else if (!organizationDescription.equals(other.organizationDescription))
-            return false;
-        if (address == null)
-        {
-            if (other.address != null)
-                return false;
-        }
-        else if (!address.equals(other.address))
-            return false;
-        return true;
+    public int hashCode() {
+        return Objects.hash(getOrganizationID(), getOrganizationName(), getOrganizationDescription(), getAddress(), getMembers());
     }
 }
