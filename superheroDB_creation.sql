@@ -57,6 +57,7 @@ CREATE TABLE sightings (
 DROP TABLE IF EXISTS organizations;
 CREATE TABLE organizations (
     organizationID INT AUTO_INCREMENT,
+    organizationName VARCHAR(50) NOT NULL,
     organizationDescription VARCHAR(100) NOT NULL,
     addressID INT NOT NULL,
     CONSTRAINT pk_organizations
