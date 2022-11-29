@@ -1,10 +1,24 @@
 package models;
 
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Organization
 {
     private int organizationID;
     private String organizationDescription;
     private Address address;
+
+    private List<Hero> members = new ArrayList<>();
+
+    public List<Hero> getMembers() {
+        return members;
+    }
+
+    public void setMembers(List<Hero> members) {
+        this.members = members;
+    }
 
     public int getOrganizationID()
     {

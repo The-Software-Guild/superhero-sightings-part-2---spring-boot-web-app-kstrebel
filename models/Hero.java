@@ -1,11 +1,24 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Hero
 {
     private int heroID;
     private String heroName;
     private String heroDescription;
     private String superPower;
+
+    private List<Organization> organizationList = new ArrayList<>();
+
+    public List<Organization> getOrganizationList() {
+        return organizationList;
+    }
+
+    public void setOrganizationList(List<Organization> organizationList) {
+        this.organizationList = organizationList;
+    }
 
     public int getHeroID()
     {
