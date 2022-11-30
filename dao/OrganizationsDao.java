@@ -25,4 +25,12 @@ public interface OrganizationsDao {
 
 
 
+    List<Hero> getMembersForOrganization (Organization organization);
+
+    void addMembersToOrganizations(List<Organization> organizationList);
+
+    void insertOrganizationMember(Organization organization);
+
+
+
 }
