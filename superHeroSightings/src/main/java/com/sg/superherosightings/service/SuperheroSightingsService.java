@@ -32,7 +32,8 @@ public interface SuperheroSightingsService
 
     public Location getLocation(int id);
 
-    public List<Location> getLocationsByAddress(Address address);
+    //removed...?
+    //public List<Location> getLocationsByAddress(Address address);
 
     public void updateLocation(Location location);
 
@@ -50,9 +51,11 @@ public interface SuperheroSightingsService
 
     public void updateOrganization(Organization organization);
 
-    public void addOrganizationMember(Organization organization, int heroID);
+    // public void addOrganizationMember(Organization organization, int heroID);
+    public void addOrganizationMember(Organization organization);
 
-    public void addMemberOrganizations(int heroID, List<Organization> organizations);
+    // public void addMemberOrganizations(int heroID, List<Organization> organizations);
+    public void addMemberOrganizations(List<Organization> organizations);
 
     public void deleteOrganization(int id);
 
