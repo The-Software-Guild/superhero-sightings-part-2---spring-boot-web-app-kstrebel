@@ -1,7 +1,7 @@
 package com.sg.superherosightings.dao;
 
-import models.Address;
-import models.Location;
+import com.sg.superherosightings.models.Address;
+import com.sg.superherosightings.models.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;

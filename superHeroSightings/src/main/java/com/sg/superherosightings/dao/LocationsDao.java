@@ -1,7 +1,7 @@
 package com.sg.superherosightings.dao;
 
-import models.Address;
-import models.Location;
+import com.sg.superherosightings.models.Address;
+import com.sg.superherosightings.models.Location;
 
 import java.util.List;
 public interface LocationsDao {

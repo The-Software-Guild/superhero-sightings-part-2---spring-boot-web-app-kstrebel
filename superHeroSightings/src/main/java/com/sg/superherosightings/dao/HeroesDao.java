@@ -1,6 +1,6 @@
 package com.sg.superherosightings.dao;
 
-import models.Hero;
+import com.sg.superherosightings.models.Hero;
 
 import java.util.List;
 

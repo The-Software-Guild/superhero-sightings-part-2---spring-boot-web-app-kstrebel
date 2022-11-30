@@ -1,8 +1,8 @@
 package com.sg.superherosightings.dao;
 
-import models.Address;
-import models.Hero;
-import models.Organization;
+import com.sg.superherosightings.models.Address;
+import com.sg.superherosightings.models.Hero;
+import com.sg.superherosightings.models.Organization;
 
 import java.util.List;
 
