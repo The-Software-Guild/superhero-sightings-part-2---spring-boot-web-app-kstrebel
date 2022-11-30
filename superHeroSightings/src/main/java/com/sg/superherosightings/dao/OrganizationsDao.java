@@ -17,12 +17,7 @@ public interface OrganizationsDao {
 
     Address getAddressForOrganization(Organization organization);
 
-    List<Hero> getMembersForOrganization (Organization organization);
-
     void addMembersAndAddressToOrganizations(List<Organization> organizationList);
-
-    void insertOrganizationMember(Organization organization);
-
 
 
     List<Hero> getMembersForOrganization (Organization organization);

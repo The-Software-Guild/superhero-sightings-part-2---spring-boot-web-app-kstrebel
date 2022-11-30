@@ -31,14 +31,14 @@ public class HeroesDaoDB  implements HeroesDao {
 
     @Override
     public List<Hero> getAllHeroes() {
-        final String SELECT_ALL_HEROES = "SELECT * FROM Location";
+        final String SELECT_ALL_HEROES = "SELECT * FROM heroes";
         return jdbc.query(SELECT_ALL_HEROES, new HeroMapper());
     }
 
     @Override
     @Transactional
     public Hero addHeroes(Hero hero) {
-        final String INSERT_HERO = "INSERT INTO Hero(ID, Name, Description, SuperPower)" +
+        final String INSERT_HERO = "INSERT INTO heroes(heroID, heroName, heroDescription, superPower)" +
                 "VALUES(?,?,?,?";
         jdbc.update(INSERT_HERO,
                 hero.getHeroID(),
@@ -53,7 +53,7 @@ public class HeroesDaoDB  implements HeroesDao {
 
     @Override
     public void updateHeroes(Hero hero) {
-        final String UPDATE_HERO = "INSERT INTO Hero(ID, Name, Description, SuperPower)" +
+        final String UPDATE_HERO = "INSERT INTO heroes(heroID, heroName, heroDescription, superPower)" +
                 "VALUES(?,?,?,?";
         jdbc.update(UPDATE_HERO,
                 hero.getHeroID(),
@@ -63,8 +63,15 @@ public class HeroesDaoDB  implements HeroesDao {
     }
 
     @Override
+    @Transactional
     public void deleteHeroesByID(int ID) {
-        final String DELETE_HERO = "DELETE FROM Hero WHERE HeroID = ?";
+        final String DELETE_HERO_FROM_SIGHTINGS = "DELETE FROM sightings WHERE heroID = ?";
+        jdbc.update(DELETE_HERO_FROM_SIGHTINGS, ID);
+
+        final String DELETE_HERO_FROM_MEMBERS = "DELETE FROM members WHERE heroID =?";
+        jdbc.update(DELETE_HERO_FROM_MEMBERS, ID);
+
+        final String DELETE_HERO = "DELETE FROM heroes WHERE heroID = ?";
         jdbc.update(DELETE_HERO, ID);
     }
 
@@ -73,10 +80,10 @@ public class HeroesDaoDB  implements HeroesDao {
         @Override
         public Hero mapRow(ResultSet rs, int index) throws SQLException {
             Hero hero = new Hero();
-            hero.setHeroID(rs.getInt("HeroID"));
-            hero.setHeroName(rs.getString("HeroName"));
-            hero.setHeroDescription(rs.getString("HeroDescription"));
-            hero.setSuperPower(rs.getString("SuperPower"));
+            hero.setHeroID(rs.getInt("heroID"));
+            hero.setHeroName(rs.getString("heroName"));
+            hero.setHeroDescription(rs.getString("heroDescription"));
+            hero.setSuperPower(rs.getString("superPower"));
             return hero;
         }
     }

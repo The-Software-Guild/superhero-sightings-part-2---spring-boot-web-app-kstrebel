@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class Sighting
 {
+    private int sightingID;
+
     private Hero hero;
     private Location location;
     private LocalDate dateOfSighting;
@@ -36,6 +38,14 @@ public class Sighting
     public void setDateOfSighting(LocalDate dateOfSighting)
     {
         this.dateOfSighting = dateOfSighting;
+    }
+
+    public int getSightingID() {
+        return sightingID;
+    }
+
+    public void setSightingID(int sightingID) {
+        this.sightingID = sightingID;
     }
 
     @Override

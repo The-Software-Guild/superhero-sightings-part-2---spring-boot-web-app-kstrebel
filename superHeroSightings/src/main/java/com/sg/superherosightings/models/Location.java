@@ -7,7 +7,7 @@ public class Location
     private int locationID;
     private String locationName;
     private String locationDescription;
-    private String address;
+    private Address address;
     private float locationLatitude;
     private float locationLongitude;
 
@@ -41,12 +41,12 @@ public class Location
         this.locationDescription = locationDescription;
     }
 
-    public Constable getAddress()
+    public Address getAddress()
     {
         return address;
     }
 
-    public void setAddress(String address)
+    public void setAddress(Address address)
     {
         this.address = address;
     }

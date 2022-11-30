@@ -1,5 +1,6 @@
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.models.Hero;
 import com.sg.superherosightings.models.Location;
 import com.sg.superherosightings.models.Sighting;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class SightingsDaoDB implements SightingsDao {
     @Override
     public Sighting getSightingByID(int ID) {
         try {
-            final String SELECT_SIGHTING_BY_ID = "SELECT * FROM Sighting WHERE SightingID = ?";
+            final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sightings WHERE sightingsID = ?";
             Sighting sighting = jdbc.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), ID);
            return sighting;
         } catch (DataAccessException ex) {
@@ -32,25 +33,33 @@ public class SightingsDaoDB implements SightingsDao {
         }
     }
 
-    private Location getLocationForSighting(int ID) {
+    private Location getLocationForSighting(Sighting sighting) {
         final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM Location l" +
                 "JOIN Sighting s ON s.LocationID = l.LocationID WHERE s.SightingID = ?";
-        return jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationsDaoDB.LocationMapper(), ID);
+        return jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationsDaoDB.LocationMapper(), sighting.getLocation());
     }
 
     @Override
     public List<Sighting> getAllSightings() {
-        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM Sighting";
+        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sighting";
         List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper());
-        associateLocationsForSightings(sightings);
+        addLocationsAndHeroForSightings(sightings);
         return sightings;
     }
 
-    void associateLocationsForSightings(List<Sighting> sightings){
+    void addLocationsAndHeroForSightings(List<Sighting> sightings){
         for(Sighting sighting : sightings) {
-            sighting.setLocationID(getLocationForSighting(sighting.getLocationID()).getLocationID());
+            sighting.setHero(getHeroForSighting(sighting));
+            sighting.setLocation(getLocationForSighting(sighting));
         }
     }
+
+    private Hero getHeroForSighting(Sighting sighting) {
+        final String SELECT_HERO_FOR_SIGHTING = "SELECT h.* FROM heroes h " +
+                "JOIN sightings s ON h.heroID = s.heroID WHERE s.sightingsID = ?";
+        return jdbc.queryForObject(SELECT_HERO_FOR_SIGHTING, new HeroesDaoDB.HeroMapper(), sighting.getSightingID());
+    }
+
 
     @Override
     @Transactional
@@ -80,17 +89,17 @@ public class SightingsDaoDB implements SightingsDao {
     @Override
     @Transactional
     public void deleteSightingByID(int ID) {
-        final String DELETE_SIGHTING = "DELETE FROM Sighting WHERE SightingID = ?";
+        final String DELETE_SIGHTING = "DELETE FROM sightings WHERE sightingsID = ?";
         jdbc.update(DELETE_SIGHTING, ID);
     }
 
     @Override
     public List<Sighting> getSightingsForLocation(Location location) {
-        final String SELECT_SIGHTINGS_FOR_LOCATION = "SELECT * FROM Sighting WHERE LocationID = ?";
-        List<Sighting> sighting = jdbc.query(SELECT_SIGHTINGS_FOR_LOCATION,
+        final String SELECT_SIGHTINGS_FOR_LOCATION = "SELECT * FROM sightings WHERE locationID = ?";
+        List<Sighting> sightings = jdbc.query(SELECT_SIGHTINGS_FOR_LOCATION,
                 new SightingMapper(), location.getLocationID());
-        associateLocationsForSightings(sighting);
-        return sighting;
+        addLocationsAndHeroForSightings(sightings);
+        return sightings;
     }
 
 public static final class SightingMapper implements RowMapper<Sighting> {
@@ -98,10 +107,7 @@ public static final class SightingMapper implements RowMapper<Sighting> {
 @Override
 public Sighting mapRow(ResultSet rs, int index) throws SQLException {
     Sighting sighting = new Sighting();
-    sighting.setLocationID(rs.getInt("LocationID"));
-    sighting.setHeroID(rs.getInt("HeroID"));
-    sighting.setDateOfSighting(Date.valueOf(rs.getDate("DateOfSighting").toString()).toLocalDate());
-
+    sighting.setDateOfSighting(Date.valueOf(rs.getDate("dateOfSighting").toString()).toLocalDate());
     return sighting;
         }
     }

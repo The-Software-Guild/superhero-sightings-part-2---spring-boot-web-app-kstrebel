@@ -7,7 +7,7 @@ public class Address
     private String addressLine2;
     private String city;
     private String stateAbbreviation;
-    private int zip;
+    private String zip;
 
     public int getAddressID()
     {
@@ -59,12 +59,12 @@ public class Address
         this.stateAbbreviation = stateAbbreviation;
     }
 
-    public int getZip()
+    public String getZip()
     {
         return zip;
     }
 
-    public void setZip(int zip)
+    public void setZip(String zip)
     {
         this.zip = zip;
     }
@@ -79,7 +79,7 @@ public class Address
         result = prime * result + ((addressLine2 == null) ? 0 : addressLine2.hashCode());
         result = prime * result + ((city == null) ? 0 : city.hashCode());
         result = prime * result + ((stateAbbreviation == null) ? 0 : stateAbbreviation.hashCode());
-        result = prime * result + zip;
+        result = prime * result + ((zip == null)? 0 : zip.hashCode());
         return result;
     }
 

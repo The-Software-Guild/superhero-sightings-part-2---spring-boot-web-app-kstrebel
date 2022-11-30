@@ -12,5 +12,8 @@ public interface LocationsDao {
     void updateLocation(Location location);
     void deleteLocationByID(int ID);
 
-    List<Location> getLocationsForAddress(Address address);
+    Address getAddressForLocation(Location location);
+
+    void addAddressForLocations(List<Location> locations);
+
 }
