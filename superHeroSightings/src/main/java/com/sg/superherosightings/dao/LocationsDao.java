@@ -1,5 +1,7 @@
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.models.Address;
+import com.sg.superherosightings.models.Location;
 import models.Address;
 import models.Location;
 
@@ -12,5 +14,8 @@ public interface LocationsDao {
     void updateLocation(Location location);
     void deleteLocationByID(int ID);
 
-    List<Location> getLocationsForAddress(Address address);
+    Address getAddressForLocation(Location location);
+
+    void addAddressForLocations(List<Location> locations);
+
 }

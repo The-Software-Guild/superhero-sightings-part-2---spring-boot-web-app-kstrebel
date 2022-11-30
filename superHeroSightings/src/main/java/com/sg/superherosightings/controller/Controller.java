@@ -1,5 +1,7 @@
 package com.sg.superherosightings.controller;
 
+import com.sg.superherosightings.dao.*;
+import com.sg.superherosightings.models.*;
 import dao.*;
 import models.*;
 import org.springframework.http.HttpStatus;
@@ -96,10 +98,10 @@ public class Controller {
         organizationsDao.updateOrganization(organization);
     }
 
-    @PutMapping("/sightings/{heroID}/{locationID}/{dateOfSighting}")
+    @PutMapping("/sightings/{sightingID}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void updateSightings(@PathVariable int heroID, int organizationID, Date date, @RequestBody Hero hero, Location location, LocalDate newDate){
-        Sighting sighting = sightingsDao.getSightingByID(heroID, organizationID, date);
+    public void updateSightings(@PathVariable int sightingID, @RequestBody Hero hero, Location location, LocalDate newDate){
+        Sighting sighting = sightingsDao.getSightingByID(sightingID);
         if (hero != null){
             sighting.setHero(hero);
         }
@@ -134,10 +136,10 @@ public class Controller {
         organizationsDao.deleteOrganizationByID(organizationID);
     }
 
-    @DeleteMapping("/sightings/{heroID}/{locationID}/{dateOfSighting}")
+    @DeleteMapping("/sightings/{sightingsID}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void deleteSighting(@PathVariable int heroID, int locationID, LocalDate dateOfSighting){
-        sightingsDao.deleteSightingByID(heroID, locationID, dateOfSighting);
+    public void deleteSighting(@PathVariable int sightingID){
+        sightingsDao.deleteSightingByID(sightingID);
     }
 
     @GetMapping("/heroes")
