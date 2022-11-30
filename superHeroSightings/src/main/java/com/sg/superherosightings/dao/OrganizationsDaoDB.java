@@ -1,8 +1,8 @@
 package com.sg.superherosightings.dao;
 
-import models.Address;
-import models.Hero;
-import models.Organization;
+import com.sg.superherosightings.models.Address;
+import com.sg.superherosightings.models.Hero;
+import com.sg.superherosightings.models.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,8 +17,25 @@ import java.util.List;
 @Repository
 public class OrganizationsDaoDB implements OrganizationsDao {
 
+    private final JdbcTemplate jdbc;
+
     @Autowired
-    JdbcTemplate jdbc;
+    public OrganizationsDaoDB(JdbcTemplate jdbc){
+        this.jdbc = jdbc;
+    }
+
+    public static final class OrganizationMapper implements RowMapper<Organization> {
+
+        @Override
+        public Organization mapRow(ResultSet rs, int index) throws SQLException {
+            Organization organization = new Organization();
+            organization.setOrganizationID(rs.getInt("organizationID"));
+            organization.setOrganizationName(rs.getString("organizationName"));
+            organization.setOrganizationDescription(rs.getString("organizationDescription"));
+            return organization;
+
+        }
+    }
 
     @Override
     public Organization getOrganizationByID(int ID) {
@@ -36,7 +53,6 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             final String  SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organizations";
             List<Organization> organizations = jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
             addMembersAndAddressToOrganizations(organizations);
-
             return organizations;
     }
 
@@ -48,12 +64,12 @@ public class OrganizationsDaoDB implements OrganizationsDao {
         jdbc.update(INSERT_ORGANIZATION,
                 organization.getOrganizationID(),
                 organization.getOrganizationDescription(),
-
                 organization.getAddress().getAddressID());
 
 
         int newID = jdbc.queryForObject(("SELECT_LAST_INSERT_ID()"), Integer.class);
         organization.setOrganizationID(newID);
+        insertOrganizationMember(organization);
         return organization;
     }
 
@@ -84,15 +100,9 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     public Address getAddressForOrganization(Organization organization) {
         final String SELECT_ORGANIZATIONS_FOR_ADDRESS = "SELECT a.* FROM addresses a" + "" +
                 "JOIN organizations o ON a.addressID = o.addressID WHERE organizationID = ?";
-        return jdbc.query(SELECT_ORGANIZATIONS_FOR_ADDRESS, new AddressesDaoDB.AddressMapper(), organization.getOrganizationID());
+        return jdbc.queryForObject(SELECT_ORGANIZATIONS_FOR_ADDRESS, new AddressesDaoDB.AddressMapper(), organization.getOrganizationID());
     }
 
-    @Override
-    public List<Hero> getMembersForOrganization(Organization organization) {
-        final String SELECT_HEROES_FOR_ORGANIZATION = "SELECT * FROM heroes " +
-                "JOIN members ON heroes.heroID = members.heroId WHERE members.organizationID =?";
-        return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(), organization.getOrganizationID())
-    }
 
 
     public void addMembersAndAddressToOrganizations(List<Organization> organizationList) {
@@ -116,7 +126,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     public List<Hero> getMembersForOrganization(Organization organization) {
         final String SELECT_HEROES_FOR_ORGANIZATION = "SELECT * FROM heroes " +
                 "JOIN members ON heroes.heroID = members.heroId WHERE members.organizationID =?";
-        return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(), organization.getOrganizationID())
+        return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(), organization.getOrganizationID());
     }
 
     @Override
@@ -127,29 +137,11 @@ public class OrganizationsDaoDB implements OrganizationsDao {
 
     }
 
-    @Override
-    public void insertOrganizationMember(Organization organization) {
-        final String INSERT_ORGANIZATION_MEMBER = "INSERT INTO members(heroID, organizationID) VALUES (?,?)";
-        for(Hero heroes : organization.getMembers()){
-            jdbc.update(INSERT_ORGANIZATION_MEMBER, heroes.getHeroID(), organization.getOrganizationID());
-        }
 
     }
 
-    public static final class OrganizationMapper implements RowMapper<Organization> {
 
-            @Override
-            public Organization mapRow(ResultSet rs, int index) throws SQLException {
-            Organization organization = new Organization();
 
-            organization.setOrganizationID(rs.getInt("organizationID"));
-            organization.setOrganizationDescription(rs.getString("organizationDescription"));
-
-            return organization;
-
-            }
-        }
-}
 
 
 

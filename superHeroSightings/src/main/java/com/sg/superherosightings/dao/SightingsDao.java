@@ -1,5 +1,7 @@
 package com.sg.superherosightings.dao;
 
+import com.sg.superherosightings.models.Location;
+import com.sg.superherosightings.models.Sighting;
 import models.Location;
 import models.Sighting;
 

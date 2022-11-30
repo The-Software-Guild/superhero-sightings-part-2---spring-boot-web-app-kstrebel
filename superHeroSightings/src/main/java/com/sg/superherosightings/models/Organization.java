@@ -11,7 +11,7 @@ public class Organization
     private String organizationName;
     private String organizationDescription;
 
-    private int addressID;
+    private Address address;
   
     private List<Hero> members = new ArrayList<>();
 
@@ -52,17 +52,17 @@ public class Organization
     }
 
 
-    public int getAddressID()
+    public Address getAddress()
 
     {
-        return addressID;
+        return address;
     }
 
 
-    public void setAddressID(int addressID)
+    public void setAddress(Address address)
 
     {
-        this.addressID = addressID;
+        this.address = address;
     }
 
     @Override
