@@ -82,4 +82,18 @@ public class Sighting
             return false;
         return true;
     }
+
+    public void setLocationID(int locationID) {
+    }
+
+    public int getLocationID() {
+        return 0;
+    }
+
+    public Object getHeroID() {
+        return null;
+    }
+
+    public void setHeroID(int heroID) {
+    }
 }

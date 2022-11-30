@@ -11,8 +11,9 @@ public class Organization
 
     private String organizationName;
     private String organizationDescription;
-    private int addressID;
 
+    private int addressID;
+  
     private List<Hero> members = new ArrayList<>();
 
     public List<Hero> getMembers() {
@@ -51,12 +52,16 @@ public class Organization
         this.organizationDescription = organizationDescription;
     }
 
+
     public int getAddressID()
+
     {
         return addressID;
     }
 
+
     public void setAddressID(int addressID)
+
     {
         this.addressID = addressID;
     }

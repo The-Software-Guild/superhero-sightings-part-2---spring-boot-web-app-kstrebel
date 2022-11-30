@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -54,7 +53,8 @@ public class LocationsDaoDB implements LocationsDao {
 
     @Override
     public void updateLocation(Location location) {
-        final String UPDATE_LOCATION = "UPDATE Location SET Name = ?, Description = ?, Address = ?, Latitude = ?, Longitude = ?" + "WHERE LocationID = ?";
+        final String UPDATE_LOCATION = "UPDATE Location SET Name = ?, Description = ?, Address = ?, Latitude = ?, Longitude = ?"
+                + "WHERE LocationID = ?";
         jdbc.update(UPDATE_LOCATION,
                 location.getLocationID(),
                 location.getLocationName(),
