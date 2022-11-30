@@ -7,7 +7,7 @@ public class Address
     private String addressLine2;
     private String city;
     private String stateAbbreviation;
-    private int zip;
+    private String zip;
 
     public int getAddressID()
     {
@@ -59,7 +59,7 @@ public class Address
         this.stateAbbreviation = stateAbbreviation;
     }
 
-    public int getZip()
+    public String getZip()
     {
         return zip;
     }
