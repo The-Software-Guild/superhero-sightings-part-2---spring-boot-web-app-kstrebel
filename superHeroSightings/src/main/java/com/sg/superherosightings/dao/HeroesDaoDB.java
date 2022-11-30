@@ -1,7 +1,6 @@
 package com.sg.superherosightings.dao;
 
 import com.sg.superherosightings.models.Hero;
-import models.Hero;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
