@@ -1,6 +1,7 @@
 package dao;
 
 import models.Address;
+import models.Hero;
 import models.Organization;
 
 import java.util.List;
@@ -15,5 +16,13 @@ public interface OrganizationsDao {
     void deleteOrganizationByID(int ID);
 
     List<Organization> getOrganizationForAddress(Address address);
+
+    List<Hero> getMembersForOrganization (Organization organization);
+
+    void addMembersToOrganizations(List<Organization> organizationList);
+
+    void insertOrganizationMember(Organization organization);
+
+
 
 }
