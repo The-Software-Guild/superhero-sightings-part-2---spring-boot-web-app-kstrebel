@@ -190,4 +190,36 @@ public class SuperheroSightingsServiceImpl implements SuperheroSightingsService
         organizationsDao.deleteOrganizationByID(id);
     }
     // #endregion
+
+    // #region sighting
+    @Override
+    public Sighting addSighting(Sighting sighting)
+    {
+        return sightingsDao.addSighting(sighting);
+    }
+
+    @Override
+    public List<Sighting> getAllSightings()
+    {
+        return sightingsDao.getAllSightings();
+    }
+
+    @Override
+    public List<Sighting> getSightingsForLocation(Location location)
+    {
+        return sightingsDao.getSightingsForLocation(location);
+    }
+
+    @Override
+    public void updateSighting(Sighting sighting)
+    {
+        sightingsDao.updateSighting(sighting);
+    }
+
+    @Override
+    public void deleteSighting(int id)
+    {
+        sightingsDao.deleteSightingByID(id);
+    }
+    // #endregion
 }

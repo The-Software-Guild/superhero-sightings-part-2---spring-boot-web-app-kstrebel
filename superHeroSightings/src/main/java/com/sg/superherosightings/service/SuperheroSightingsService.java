@@ -55,4 +55,14 @@ public interface SuperheroSightingsService
     public void addMemberOrganizations(int heroID, List<Organization> organizations);
 
     public void deleteOrganization(int id);
+
+    public Sighting addSighting(Sighting sighting);
+
+    public List<Sighting> getAllSightings();
+
+    public List<Sighting> getSightingsForLocation(Location location);
+
+    public void updateSighting(Sighting sighting);
+
+    public void deleteSighting(int id);
 }
