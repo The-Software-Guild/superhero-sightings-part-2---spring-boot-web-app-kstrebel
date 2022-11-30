@@ -41,11 +41,12 @@ CREATE TABLE locations (
 
 DROP TABLE IF EXISTS sightings;
 CREATE TABLE sightings (
+    sightingsID INT AUTO_INCREMENT
     heroID INT, 
     locationID INT,
     dateOfSighting DATE,
     CONSTRAINT pk_sightings
-        PRIMARY KEY (heroID, locationID, dateOfSighting),
+        PRIMARY KEY (sightingsID),
     CONSTRAINT fk_sightings_heroes
         FOREIGN KEY (heroID)
         REFERENCES heroes (heroID),
@@ -57,6 +58,7 @@ CREATE TABLE sightings (
 DROP TABLE IF EXISTS organizations;
 CREATE TABLE organizations (
     organizationID INT AUTO_INCREMENT,
+    organizationName VARCHAR(50) NOT NULL,
     organizationDescription VARCHAR(100) NOT NULL,
     addressID INT NOT NULL,
     CONSTRAINT pk_organizations

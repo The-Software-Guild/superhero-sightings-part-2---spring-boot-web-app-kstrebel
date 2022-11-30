@@ -33,10 +33,10 @@ INSERT INTO sightings (heroID, locationID, dateOfSighting) VALUES
 
 SELECT * FROM sightings;
 
-INSERT INTO organizations (organizationDescription, addressID) VALUES
-	('Association of Heroic Women', 4),
-    ('Association of Heroes with Animal Names', 5),
-    ('Association of Heroes', 6);
+INSERT INTO organizations (organizationName, organizationDescription, addressID) VALUES
+	('Association of Heroic Women', 'place for women who are superheroes', 4),
+    ('Association of Heroes with Animal Names', 'place for heroes with animal names', 5),
+    ('Association of Heroes', 'place for all heroes', 6);
 
 SELECT * FROM organizations;
 
