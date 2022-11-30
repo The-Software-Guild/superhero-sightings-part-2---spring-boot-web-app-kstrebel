@@ -15,7 +15,15 @@ public interface OrganizationsDao {
     void updateOrganization(Organization organization);
     void deleteOrganizationByID(int ID);
 
-    List<Organization> getOrganizationForAddress(Address address);
+    Address getAddressForOrganization(Organization organization);
+
+    List<Hero> getMembersForOrganization (Organization organization);
+
+    void addMembersAndAddressToOrganizations(List<Organization> organizationList);
+
+    void insertOrganizationMember(Organization organization);
+
+
 
     List<Hero> getMembersForOrganization (Organization organization);
 

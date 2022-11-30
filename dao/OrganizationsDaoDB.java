@@ -35,7 +35,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     public List<Organization> getAllOrganizations() {
             final String  SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organizations";
             List<Organization> organizations = jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
-            addMembersToOrganizations(organizations);
+            addMembersAndAddressToOrganizations(organizations);
             return organizations;
     }
 
@@ -47,7 +47,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
         jdbc.update(INSERT_ORGANIZATION,
                 organization.getOrganizationID(),
                 organization.getOrganizationDescription(),
-                organization.getAddressID());
+                organization.getAddress().getAddressID());
 
         int newID = jdbc.queryForObject(("SELECT_LAST_INSERT_ID()"), Integer.class);
         organization.setOrganizationID(newID);
@@ -61,13 +61,11 @@ public class OrganizationsDaoDB implements OrganizationsDao {
         jdbc.update(UPDATE_ORGANIZATION,
                 organization.getOrganizationID(),
                 organization.getOrganizationDescription(),
-                organization.getAddressID());
+                organization.getAddress().getAddressID());
     }
 
     @Override
     public void deleteOrganizationByID(int ID) {
-        final String DELETE_ADDRESS = "DELETE FROM addresses WHERE organizationID = ?";
-        jdbc.update(DELETE_ADDRESS, ID);
 
         final String DELETE_MEMBERS = "DELETE FROM members WHERE organizationID =?";
         jdbc.update(DELETE_MEMBERS, ID);
@@ -78,11 +76,35 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     }
 
     @Override
-    public List<Organization> getOrganizationForAddress(Address address) {
-        final String SELECT_ORGANIZATIONS_FOR_ADDRESS = "SELECT * FROM locations " + "WHERE addressID = ?";
-        List<Organization> organizations = jdbc.query(SELECT_ORGANIZATIONS_FOR_ADDRESS,
-                new OrganizationMapper(), address.getAddressID());
-        return organizations;
+    public Address getAddressForOrganization(Organization organization) {
+        final String SELECT_ORGANIZATIONS_FOR_ADDRESS = "SELECT a.* FROM addresses a" + "" +
+                "JOIN organizations o ON a.addressID = o.addressID WHERE organizationID = ?";
+        return jdbc.query(SELECT_ORGANIZATIONS_FOR_ADDRESS, new AddressesDaoDB.AddressMapper(), organization.getOrganizationID());
+    }
+
+    @Override
+    public List<Hero> getMembersForOrganization(Organization organization) {
+        final String SELECT_HEROES_FOR_ORGANIZATION = "SELECT * FROM heroes " +
+                "JOIN members ON heroes.heroID = members.heroId WHERE members.organizationID =?";
+        return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(), organization.getOrganizationID())
+    }
+
+
+    public void addMembersAndAddressToOrganizations(List<Organization> organizationList) {
+        for(Organization organization: organizationList){
+            organization.setAddress(getAddressForOrganization(organization));
+            organization.setMembers(getMembersForOrganization(organization));
+        }
+
+    }
+
+    @Override
+    public void insertOrganizationMember(Organization organization) {
+        final String INSERT_ORGANIZATION_MEMBER = "INSERT INTO members(heroID, organizationID) VALUES (?,?)";
+        for(Hero heroes : organization.getMembers()){
+            jdbc.update(INSERT_ORGANIZATION_MEMBER, heroes.getHeroID(), organization.getOrganizationID());
+        }
+
     }
 
     @Override
@@ -116,7 +138,6 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             Organization organization = new Organization();
             organization.setOrganizationID(rs.getInt("organizationID"));
             organization.setOrganizationDescription(rs.getString("organizationDescription"));
-            organization.setAddressID(Integer.parseInt(rs.getString("addressID")));
             return organization;
             }
         }
