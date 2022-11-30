@@ -86,6 +86,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     }
 
     @Override
+    @Transactional
     public void deleteOrganizationByID(int ID) {
 
         final String DELETE_MEMBERS = "DELETE FROM members WHERE organizationID =?";

@@ -2,7 +2,6 @@ package com.sg.superherosightings.dao;
 
 import com.sg.superherosightings.models.Hero;
 import com.sg.superherosightings.models.Organization;
-import models.Hero;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public interface HeroesDao {
 
     List<Organization> getOrganizationsForHero(Hero hero);
 
-    void addOrganizationsToHero(List<Hero> heroList);
+    void addOrganizationsToHeroes(List<Hero> heroList);
 
 
 }
