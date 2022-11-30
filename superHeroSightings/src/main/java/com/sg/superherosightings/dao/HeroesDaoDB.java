@@ -1,6 +1,7 @@
 package com.sg.superherosightings.dao;
 
 import com.sg.superherosightings.models.Hero;
+import com.sg.superherosightings.models.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -32,16 +33,18 @@ public class HeroesDaoDB  implements HeroesDao {
     @Override
     public List<Hero> getAllHeroes() {
         final String SELECT_ALL_HEROES = "SELECT * FROM heroes";
-        return jdbc.query(SELECT_ALL_HEROES, new HeroMapper());
+
+        List<Hero> heroList = jdbc.query(SELECT_ALL_HEROES, new HeroMapper());
+        addOrganizationsToHeroes(heroList);
+        return heroList;
     }
 
     @Override
     @Transactional
     public Hero addHeroes(Hero hero) {
-        final String INSERT_HERO = "INSERT INTO heroes(heroID, heroName, heroDescription, superPower)" +
+        final String INSERT_HERO = "INSERT INTO heroes(heroName, heroDescription, superPower)" +
                 "VALUES(?,?,?,?";
         jdbc.update(INSERT_HERO,
-                hero.getHeroID(),
                 hero.getHeroName(),
                 hero.getHeroDescription(),
                 hero.getSuperPower());
@@ -53,8 +56,8 @@ public class HeroesDaoDB  implements HeroesDao {
 
     @Override
     public void updateHeroes(Hero hero) {
-        final String UPDATE_HERO = "INSERT INTO heroes(heroID, heroName, heroDescription, superPower)" +
-                "VALUES(?,?,?,?";
+        final String UPDATE_HERO = "UPDATE heroes SET heroName = ?, heroDescription = ?, superPower =?" +
+                "WHERE heroID = ?";
         jdbc.update(UPDATE_HERO,
                 hero.getHeroID(),
                 hero.getHeroName(),
@@ -73,6 +76,21 @@ public class HeroesDaoDB  implements HeroesDao {
 
         final String DELETE_HERO = "DELETE FROM heroes WHERE heroID = ?";
         jdbc.update(DELETE_HERO, ID);
+    }
+
+    @Override
+    public List<Organization> getOrganizationsForHero(Hero hero) {
+        final String GET_ORGANIZATIONS_FOR_HERO = "SELECT o.* FROM organizations o " +
+                "JOIN heroes h o.heroID = h.heroID WHERE h.heroID =?";
+        return jdbc.query(GET_ORGANIZATIONS_FOR_HERO, new OrganizationsDaoDB.OrganizationMapper(), hero.getHeroID());
+    }
+
+    @Override
+    public void addOrganizationsToHeroes(List<Hero> heroList) {
+        for(Hero hero : heroList){
+            getOrganizationsForHero(hero);
+        }
+
     }
 
     public static final class HeroMapper implements RowMapper<Hero> {
