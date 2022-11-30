@@ -8,6 +8,8 @@ import java.util.Objects;
 public class Organization
 {
     private int organizationID;
+
+    private String organizationName;
     private String organizationDescription;
 
     private int addressID;
@@ -16,6 +18,14 @@ public class Organization
 
     public List<Hero> getMembers() {
         return members;
+    }
+
+    public String getOrganizationName() {
+        return organizationName;
+    }
+
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
     public void setMembers(List<Hero> members) {
@@ -61,11 +71,13 @@ public class Organization
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
-        return getOrganizationID() == that.getOrganizationID() && getAddressID() == that.getAddressID() && Objects.equals(getOrganizationDescription(), that.getOrganizationDescription()) && Objects.equals(getMembers(), that.getMembers());
+        return getOrganizationID() == that.getOrganizationID() && getOrganizationName().equals(that.getOrganizationName()) && getOrganizationDescription().equals(that.getOrganizationDescription()) && getAddress().equals(that.getAddress()) && getMembers().equals(that.getMembers());
+
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrganizationID(), getOrganizationDescription(), getAddressID(), getMembers());
+        return Objects.hash(getOrganizationID(), getOrganizationName(), getOrganizationDescription(), getAddress(), getMembers());
+
     }
 }
