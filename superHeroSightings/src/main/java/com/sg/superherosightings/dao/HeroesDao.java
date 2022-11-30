@@ -14,7 +14,7 @@ public interface HeroesDao {
 
     List<Organization> getOrganizationsForHero(Hero hero);
 
-    void addOrganizationsToHero(List<Hero> heroList);
+    void addOrganizationsToHeroes(List<Hero> heroList);
 
 
 }
