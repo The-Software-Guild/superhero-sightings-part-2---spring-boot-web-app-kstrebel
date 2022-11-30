@@ -36,6 +36,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             final String  SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organizations";
             List<Organization> organizations = jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
             addMembersAndAddressToOrganizations(organizations);
+
             return organizations;
     }
 
@@ -139,6 +140,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             organization.setOrganizationID(rs.getInt("organizationID"));
             organization.setOrganizationDescription(rs.getString("organizationDescription"));
             return organization;
+
             }
         }
 }
