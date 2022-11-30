@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7d6d826b-1395-47db-a946-c4f81447bb8d" name="Changes" comment="Added tests for AddressDao" />
+    <list default="true" id="7d6d826b-1395-47db-a946-c4f81447bb8d" name="Changes" comment="Added tests for AddressDao">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDaoDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDaoDB.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +33,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/Ysabel/IdeaProjects/superhero-sightings-part-2---spring-boot-web-app-kstrebel",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
@@ -53,7 +58,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669749876856</updated>
-      <workItem from="1669749878651" duration="8017000" />
+      <workItem from="1669749878651" duration="9900000" />
     </task>
     <task id="LOCAL-00001" summary="Refactored as java project">
       <created>1669750089288</created>
@@ -83,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669830236086</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added tests for AddressDao">
+      <created>1669830786532</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669830786532</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
