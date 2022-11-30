@@ -2,8 +2,6 @@ package com.sg.superherosightings.controller;
 
 import com.sg.superherosightings.dao.*;
 import com.sg.superherosightings.models.*;
-import dao.*;
-import models.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
