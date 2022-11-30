@@ -1,6 +1,8 @@
 package com.sg.superherosightings.dao;
 
 import com.sg.superherosightings.models.Address;
+import com.sg.superherosightings.models.Location;
+import com.sg.superherosightings.models.Organization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +11,8 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.print.DocFlavor;
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.List;
 
@@ -96,7 +100,42 @@ public class AddressesDaoDB implements AddressesDao {
     }
 
     @Override
+    @Transactional
     public void deleteAddressByID(int ID) {
+
+        //first see if the address is a foreign key for a location or an organization
+        Location location;
+        Organization organization;
+        try{
+            final String FIND_LOCATION_FOR_ADDRESS = "SELECT * FROM locations WHERE addressID = ?";
+            location = jdbc.queryForObject(FIND_LOCATION_FOR_ADDRESS, new LocationsDaoDB.LocationMapper(), ID);
+        }catch (DataAccessException ex){
+            location = null;
+        }
+        try{
+            final String FIND_ORGANIZATION_FOR_ADDRESS = "SELECT * FROM organizations WHERE addressID =?";
+            organization = jdbc.queryForObject(FIND_ORGANIZATION_FOR_ADDRESS, new OrganizationsDaoDB.OrganizationMapper(), ID);
+        } catch (DataAccessException ex){
+            organization = null;
+        }
+
+        // remove the location/organization where the address is a foreign key 2 steps
+        // Then remove sightings or members where location/organization is a foreign key
+        //FInally remove the location/organization
+       if (location != null) {
+           final String REMOVE_LOCATION_FROM_SIGHTINGS = "SELECT * FROM sightings WHERE locationID =?";
+           jdbc.update(REMOVE_LOCATION_FROM_SIGHTINGS,location.getLocationID());
+           final String REMOVE_LOCATION = "SELECT * from locations WHERE addressID = ?";
+           jdbc.update(REMOVE_LOCATION, ID);
+       }
+       if (organization != null){
+           final String REMOVE_ORGANIZATION_FROM_MEMBERS = "SELECT * FROM members WHERE organizationID =?";
+           jdbc.update(REMOVE_ORGANIZATION_FROM_MEMBERS, organization.getOrganizationID());
+           final String REMOVE_ORGANIZATION = "SELECT * FROM organizations WHERE addressID =?";
+           jdbc.update(REMOVE_ORGANIZATION, ID);
+       }
+
+        //lastly remove the address
         final String DELETE_ADDRESS = "DELETE FROM addresses WHERE addressID = ?";
         jdbc.update(DELETE_ADDRESS, ID);
     }
