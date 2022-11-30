@@ -4,7 +4,7 @@ public class Organization
 {
     private int organizationID;
     private String organizationDescription;
-    private Address address;
+    private String address;
 
     public int getOrganizationID()
     {
@@ -26,12 +26,12 @@ public class Organization
         this.organizationDescription = organizationDescription;
     }
 
-    public Address getAddress()
+    public String getAddress()
     {
         return address;
     }
 
-    public void setAddress(Address address)
+    public void setAddress(String address)
     {
         this.address = address;
     }

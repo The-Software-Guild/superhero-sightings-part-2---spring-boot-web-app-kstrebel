@@ -1,11 +1,13 @@
 package models;
 
+import java.lang.constant.Constable;
+
 public class Location
 {
     private int locationID;
     private String locationName;
     private String locationDescription;
-    private Address address;
+    private String address;
     private float locationLatitude;
     private float locationLongitude;
 
@@ -39,12 +41,12 @@ public class Location
         this.locationDescription = locationDescription;
     }
 
-    public Address getAddress()
+    public Constable getAddress()
     {
         return address;
     }
 
-    public void setAddress(Address address)
+    public void setAddress(String address)
     {
         this.address = address;
     }

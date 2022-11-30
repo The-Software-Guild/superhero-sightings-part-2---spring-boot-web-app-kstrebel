@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -45,7 +44,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
         jdbc.update(INSERT_ORGANIZATION,
                 organization.getOrganizationID(),
                 organization.getOrganizationDescription(),
-                organization.getAddressID());
+                organization.getAddress());
 
         int newID = jdbc.queryForObject(("SELECT_LAST_INSERT_ID()"), Integer.class);
         organization.setOrganizationID(newID);
@@ -59,7 +58,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
         jdbc.update(UPDATE_ORGANIZATION,
                 organization.getOrganizationID(),
                 organization.getOrganizationDescription(),
-                organization.getAddressID());
+                organization.getAddress());
     }
 
     @Override
@@ -87,7 +86,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             Organization organization = new Organization();
             organization.setOrganizationID(rs.getInt("OrganizationID"));
             organization.setOrganizationDescription(rs.getString("Organization Description"));
-            organization.setAddressID(Integer.parseInt(rs.getString("AddressID")));
+            organization.setAddress(rs.getString("Address"));
             return organization;
             }
         }
