@@ -11,7 +11,7 @@ public class Organization
 
     private String organizationName;
     private String organizationDescription;
-    private Address address;
+    private int addressID;
 
     private List<Hero> members = new ArrayList<>();
 
@@ -51,14 +51,14 @@ public class Organization
         this.organizationDescription = organizationDescription;
     }
 
-    public Address getAddress()
+    public int getAddressID()
     {
-        return address;
+        return addressID;
     }
 
-    public void setAddress(Address address)
+    public void setAddressID(int addressID)
     {
-        this.address = address;
+        this.addressID = addressID;
     }
 
     @Override
@@ -67,10 +67,12 @@ public class Organization
         if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
         return getOrganizationID() == that.getOrganizationID() && getOrganizationName().equals(that.getOrganizationName()) && getOrganizationDescription().equals(that.getOrganizationDescription()) && getAddress().equals(that.getAddress()) && getMembers().equals(that.getMembers());
+
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getOrganizationID(), getOrganizationName(), getOrganizationDescription(), getAddress(), getMembers());
+
     }
 }

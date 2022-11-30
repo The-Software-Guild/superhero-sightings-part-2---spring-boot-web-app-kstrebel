@@ -36,7 +36,6 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             final String  SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organizations";
             List<Organization> organizations = jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
             addMembersAndAddressToOrganizations(organizations);
-            return organizations;
     }
 
     @Override
@@ -107,6 +106,30 @@ public class OrganizationsDaoDB implements OrganizationsDao {
 
     }
 
+    @Override
+    public List<Hero> getMembersForOrganization(Organization organization) {
+        final String SELECT_HEROES_FOR_ORGANIZATION = "SELECT * FROM heroes " +
+                "JOIN members ON heroes.heroID = members.heroId WHERE members.organizationID =?";
+        return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(), organization.getOrganizationID())
+    }
+
+    @Override
+    public void addMembersToOrganizations(List<Organization> organizationList) {
+        for(Organization organization: organizationList){
+            organization.setMembers(getMembersForOrganization(organization));
+        }
+
+    }
+
+    @Override
+    public void insertOrganizationMember(Organization organization) {
+        final String INSERT_ORGANIZATION_MEMBER = "INSERT INTO members(heroID, organizationID) VALUES (?,?)";
+        for(Hero heroes : organization.getMembers()){
+            jdbc.update(INSERT_ORGANIZATION_MEMBER, heroes.getHeroID(), organization.getOrganizationID());
+        }
+
+    }
+
     public static final class OrganizationMapper implements RowMapper<Organization> {
 
             @Override
@@ -114,7 +137,6 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             Organization organization = new Organization();
             organization.setOrganizationID(rs.getInt("organizationID"));
             organization.setOrganizationDescription(rs.getString("organizationDescription"));
-            return organization;
             }
         }
 }
