@@ -34,8 +34,8 @@ public class SightingsDaoDB implements SightingsDao {
     }
 
     private Location getLocationForSighting(Sighting sighting) {
-        final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM Location l" +
-                "JOIN Sighting s ON s.LocationID = l.LocationID WHERE s.SightingID = ?";
+        final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM locations l" +
+                "JOIN sightings s ON s.locationID = l.locationID WHERE s.sightingsID = ?";
         return jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationsDaoDB.LocationMapper(), sighting.getLocation());
     }
 
@@ -64,11 +64,11 @@ public class SightingsDaoDB implements SightingsDao {
     @Override
     @Transactional
     public Sighting addSighting(Sighting sighting) {
-        final String INSERT_SIGHTING = "INSERT INTO Sighting(HeroID, LocationID, DateOfSighting)"
+        final String INSERT_SIGHTING = "INSERT INTO sightings(heroID, locationID, dateOfSighting)"
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_SIGHTING,
-                sighting.getHeroID(),
-                sighting.getLocationID(),
+                sighting.getHero().getHeroID(),
+                sighting.getLocation().getLocationID(),
                 sighting.getDateOfSighting());
 
         int newID = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
@@ -78,11 +78,11 @@ public class SightingsDaoDB implements SightingsDao {
 
     @Override
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE Sighting SET HeroID = ?, LocationID =?, DateOfSighting = ?"
-                + "WHERE SightingID = ?";
+        final String UPDATE_SIGHTING = "UPDATE sighting SET heroID = ?, locationID =?, dateOfSighting = ?"
+                + "WHERE sightingsID = ?";
         jdbc.update(UPDATE_SIGHTING,
-                sighting.getHeroID(),
-                sighting.getLocationID(),
+                sighting.getHero().getHeroID(),
+                sighting.getLocation().getLocationID(),
                 sighting.getDateOfSighting());
     }
 
