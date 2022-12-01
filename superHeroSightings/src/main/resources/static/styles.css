@@ -1,0 +1,9 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+form label{
+    display:block;
+}
