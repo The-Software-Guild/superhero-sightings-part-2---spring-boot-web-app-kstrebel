@@ -65,28 +65,38 @@ public class AddressesDaoDB implements AddressesDao {
     @Override
     @Transactional
     public Address addAddresses(Address address) {
-        final String INSERT_ADDRESS = "INSERT INTO addresses(addressLine1, addressLine2, city, stateAbbreviation, zip )"
-                + "VALUES(?,?,?,?,?,?";
+        final String INSERT_ADDRESS = "INSERT INTO addresses(addressLine1, addressLine2, city, stateAbbreviation, zip) "
+                + "VALUES (?,?,?,?,?)";
 
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbc.update(INSERT_ADDRESS,
+                address.getAddressLine1(),
+                address.getAddressLine2(),
+                address.getCity(),
+                address.getStateAbbreviation(),
+                address.getZip());
 
-        jdbc.update((Connection conn) -> {
-
-            PreparedStatement statement = conn.prepareStatement(
-                    INSERT_ADDRESS,
-                    Statement.RETURN_GENERATED_KEYS);
-
-            statement.setInt(1, address.getAddressID());
-            statement.setString(2, address.getAddressLine1());
-            statement.setString(3, address.getAddressLine2());
-            statement.setString(4, address.getCity());
-            statement.setString(5, address.getStateAbbreviation());
-            statement.setString(6, address.getZip());
-            return statement;
-        }, keyHolder);
-
-        address.setAddressID(keyHolder.getKey().intValue());
+        int newID = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        address.setAddressID(newID);
         return address;
+
+//        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
+//
+//        jdbc.update((Connection conn) -> {
+//
+//            PreparedStatement statement = conn.prepareStatement(
+//                    INSERT_ADDRESS,
+//                    Statement.RETURN_GENERATED_KEYS);
+//
+//            statement.setString(2, address.getAddressLine1());
+//            statement.setString(3, address.getAddressLine2());
+//            statement.setString(4, address.getCity());
+//            statement.setString(5, address.getStateAbbreviation());
+//            statement.setString(6, address.getZip());
+//            return statement;
+//        }, keyHolder);
+//
+//        address.setAddressID(keyHolder.getKey().intValue());
+//        return address;
     }
 
     @Override
