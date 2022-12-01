@@ -32,7 +32,6 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             organization.setOrganizationName(rs.getString("organizationName"));
             organization.setOrganizationDescription(rs.getString("organizationDescription"));
             return organization;
-
         }
     }
 
@@ -127,11 +126,10 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     public void insertOrganizationMember(Organization organization)
     {
         final String INSERT_ORGANIZATION_MEMBER = "INSERT INTO members(heroID, organizationID) VALUES (?,?)";
-        for (Hero heroes : organization.getMembers())
+        for (Hero hero : organization.getMembers())
         {
-            jdbc.update(INSERT_ORGANIZATION_MEMBER, heroes.getHeroID(), organization.getOrganizationID());
+            jdbc.update(INSERT_ORGANIZATION_MEMBER, hero.getHeroID(), organization.getOrganizationID());
         }
-
     }
 
     @Override
@@ -141,13 +139,6 @@ public class OrganizationsDaoDB implements OrganizationsDao {
                 "JOIN members ON heroes.heroID = members.heroId WHERE members.organizationID =?";
         return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(),
                 organization.getOrganizationID());
-    }
-
-    @Override
-    public List<Organization> getOrganizationsForHero(Hero hero)
-    {
-        return null;
-        // Needs to be implemented. Will return a list of organizations that a hero is in.
     }
 
     @Override

@@ -76,13 +76,26 @@ public class Address
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return getAddressID() == address.getAddressID() && getAddressLine1().equals(address.getAddressLine1()) && Objects.equals(getAddressLine2(), address.getAddressLine2()) && getCity().equals(address.getCity()) && getStateAbbreviation().equals(address.getStateAbbreviation()) && getZip().equals(address.getZip());
+        return getAddressLine1().equals(address.getAddressLine1()) && Objects.equals(getAddressLine2(), address.getAddressLine2()) && getCity().equals(address.getCity()) && getStateAbbreviation().equals(address.getStateAbbreviation()) && getZip().equals(address.getZip());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAddressID(), getAddressLine1(), getAddressLine2(), getCity(), getStateAbbreviation(), getZip());
+        return Objects.hash(getAddressLine1(), getAddressLine2(), getCity(), getStateAbbreviation(), getZip());
     }
+
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Address address = (Address) o;
+//        return getAddressID() == address.getAddressID() && getAddressLine1().equals(address.getAddressLine1()) && Objects.equals(getAddressLine2(), address.getAddressLine2()) && getCity().equals(address.getCity()) && getStateAbbreviation().equals(address.getStateAbbreviation()) && getZip().equals(address.getZip());
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getAddressID(), getAddressLine1(), getAddressLine2(), getCity(), getStateAbbreviation(), getZip());
+//    }
 
 //    @Override
 //    public int hashCode()
