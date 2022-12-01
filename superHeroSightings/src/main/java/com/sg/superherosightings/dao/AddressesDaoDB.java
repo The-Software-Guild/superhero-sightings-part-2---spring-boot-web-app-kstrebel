@@ -58,7 +58,7 @@ public class AddressesDaoDB implements AddressesDao {
 
     @Override
     public List<Address> getAllAddresses() {
-        final String SELECT_ALL_ADDRESSES = "SELECT * FROM Address";
+        final String SELECT_ALL_ADDRESSES = "SELECT * FROM addresses";
         return jdbc.query(SELECT_ALL_ADDRESSES, new AddressMapper());
     }
 
