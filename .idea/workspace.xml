@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7d6d826b-1395-47db-a946-c4f81447bb8d" name="Changes" comment="Added tests for AddressDao">
+    <list default="true" id="7d6d826b-1395-47db-a946-c4f81447bb8d" name="Changes" comment="Added method to OrganizationsDao">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/springframework_boot_spring.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/superhero-sightings-part-2---spring-boot-web-app-kstrebel.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDaoDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/superHeroSightings/src/main/java/com/sg/superherosightings/dao/OrganizationsDaoDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/superHeroSightings/src/test/java/com/sg/superherosightings/dao/AddressesDaoDBTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/superHeroSightings/src/test/java/com/sg/superherosightings/dao/AddressesDaoDBTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,18 +31,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/Ysabel/IdeaProjects/superhero-sightings-part-2---spring-boot-web-app-kstrebel",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Problems",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;true&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/Ysabel/IdeaProjects/superhero-sightings-part-2---spring-boot-web-app-kstrebel&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.1816092&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -58,7 +67,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1669749876856</updated>
-      <workItem from="1669749878651" duration="9900000" />
+      <workItem from="1669749878651" duration="14732000" />
+      <workItem from="1669845347847" duration="7784000" />
     </task>
     <task id="LOCAL-00001" summary="Refactored as java project">
       <created>1669750089288</created>
@@ -95,7 +105,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669830786532</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Added method to OrganizationsDao">
+      <created>1669838050451</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669838050452</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -127,6 +144,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Refactored as java project" />
     <MESSAGE value="Added tests for AddressDao" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added tests for AddressDao" />
+    <MESSAGE value="Added method to OrganizationsDao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added method to OrganizationsDao" />
   </component>
 </project>
