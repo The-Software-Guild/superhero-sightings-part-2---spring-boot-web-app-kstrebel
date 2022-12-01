@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Hero Page</title>
+
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <main>
+            <h1>Hero Page</h1>
+            <div class="heroList">
+                <h2>List of Heroes</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Superpower</th>
+                            <th>Description</th>
+                            <!-- <th>Organization(s)</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="hero:${heroList}">
+                            <td th:text="${hero.heroName}"></td>
+                            <td th:text="${hero.superPower}"></td>
+                            <td th:text="${hero.heroDescription}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="form">
+                <form action="newHero" method="POST">
+                    <legend>Add a New Superhero</legend>
+                    <label for="name">
+                        <span>Name: </span>
+                        <input type="text" id="name" name="name" placeholder="The hero's name">
+                    </label>
+                    <label for="superpower">
+                        <span>Superpower: </span>
+                        <input type="text" id="superpower" name="superpower" placeholder="What power do they have?">
+                    </label>
+                    <label for="description">
+                        <span>Description: </span>
+                        <input type="text" id="description" name="description" placeholder="A short description of the hero">
+                    </label>
+                    <input type="reset" id="reset" value="Start Over">
+                    <input type="submit" id="submit" value="Add New Hero">
+                </form>
+            </div>
+        </main>
+    </body>
+
+</html>

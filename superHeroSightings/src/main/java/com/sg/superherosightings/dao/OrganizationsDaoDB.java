@@ -15,15 +15,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class OrganizationsDaoDB implements OrganizationsDao
-{
-    //previous; does not compile
-    //private final JdbcTemplate jdbc;
-    //
-    //@Autowired
-    //public OrganizationsDaoDB(JdbcTemplate jdbc){
-    //    this.jdbc = jdbc;
-    //}
+public class OrganizationsDaoDB implements OrganizationsDao {
+
 
     @Autowired
     JdbcTemplate jdbc;

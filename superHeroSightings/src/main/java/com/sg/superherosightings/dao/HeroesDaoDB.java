@@ -24,6 +24,7 @@ public class HeroesDaoDB  implements HeroesDao {
     public Hero getHeroesByID(int heroID) {
         try {
             final String SELECT_HERO_BY_ID = "SELECT * FROM heroes WHERE heroID = ?";
+
             return jdbc.queryForObject(SELECT_HERO_BY_ID, new HeroMapper(), heroID);
         } catch (DataAccessException ex) {
             return null;

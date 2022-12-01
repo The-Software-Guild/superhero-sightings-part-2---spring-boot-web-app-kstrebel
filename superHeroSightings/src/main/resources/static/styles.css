@@ -1,0 +1,32 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+button {
+    background-color: blue;
+    border: black;
+    border-radius: 12px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: medium;
+    font-family: Cambria;
+    margin-top: 1px;
+    margin-right: 2px;
+    cursor: pointer;
+    positon: absolute;
+    top: 0;
+    right: 0;
+}
+
+form label {
+    display: block;
+}
