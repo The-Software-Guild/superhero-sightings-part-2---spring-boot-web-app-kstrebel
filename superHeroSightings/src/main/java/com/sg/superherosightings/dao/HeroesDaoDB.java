@@ -20,6 +20,9 @@ public class HeroesDaoDB  implements HeroesDao {
     @Autowired
     JdbcTemplate jdbc;
 
+    @Autowired
+    OrganizationsDao oDao;
+
     @Override
     public Hero getHeroesByID(int heroID) {
         try {
@@ -84,7 +87,9 @@ public class HeroesDaoDB  implements HeroesDao {
         final String GET_ORGANIZATIONS_FOR_HERO = "SELECT * FROM organizations " +
                 "JOIN members ON organizations.organizationID = members.organizationID " +
                 "JOIN heroes ON members.heroID = heroes.heroID WHERE heroes.heroID = ?";
-        return jdbc.query(GET_ORGANIZATIONS_FOR_HERO, new OrganizationsDaoDB.OrganizationMapper(), hero.getHeroID());
+        List<Organization> organizations = jdbc.query(GET_ORGANIZATIONS_FOR_HERO, new OrganizationsDaoDB.OrganizationMapper(), hero.getHeroID());
+        oDao.addMembersAndAddressToOrganizations(organizations);
+        return organizations;
     }
 
     @Override

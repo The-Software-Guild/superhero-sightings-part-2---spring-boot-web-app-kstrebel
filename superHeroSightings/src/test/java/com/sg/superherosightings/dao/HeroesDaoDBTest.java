@@ -133,8 +133,8 @@
          address.setAddressLine1("Test Address Line 1");
          address.setAddressLine2("Test Address Line 2");
          address.setCity("Test city");
-         address.setStateAbbreviation("Test");
-         address.setZip("Test Zip");
+         address.setStateAbbreviation("AA");
+         address.setZip("11111");
          address = addressesDao.addAddresses(address);
 
          Organization organization = new Organization();
@@ -214,9 +214,15 @@
          organization3.setMembers(heroes2);
          organization3 = organizationsDao.addOrganization(organization3);
 
-         List<Organization> organizationsForHero = heroesDao.getOrganizationsForHero(hero);
-         assertEquals(2, organizationsForHero.size());
-//         assertTrue(organizationsForHero.contains(organization));
+         List<Organization> organizationsForHero = new ArrayList<>();
+         organizationsForHero.add(organization);
+         organizationsForHero.add(organization2);
+
+         List<Organization> fromDao = heroesDao.getOrganizationsForHero(hero);
+         List<Organization> fromDao2 = heroesDao.getOrganizationsForHero(hero2);
+         assertEquals(2, fromDao.size());
+         assertEquals(1, fromDao2.size());
+         assertTrue(organizationsForHero.contains(organization));
          assertTrue(organizationsForHero.contains(organization2));
          assertFalse(organizationsForHero.contains(organization3));
      }
