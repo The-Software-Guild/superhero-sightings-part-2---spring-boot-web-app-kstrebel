@@ -41,7 +41,7 @@ CREATE TABLE locations (
 
 DROP TABLE IF EXISTS sightings;
 CREATE TABLE sightings (
-    sightingsID INT AUTO_INCREMENT
+    sightingsID INT AUTO_INCREMENT,
     heroID INT, 
     locationID INT,
     dateOfSighting DATE,
