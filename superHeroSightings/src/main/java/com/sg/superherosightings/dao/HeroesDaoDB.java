@@ -23,7 +23,7 @@ public class HeroesDaoDB  implements HeroesDao {
     @Override
     public Hero getHeroesByID(int heroID) {
         try {
-            final String SELECT_HERO_BY_ID = "SELECT * FROM Hero WHERE HeroID = ?";
+            final String SELECT_HERO_BY_ID = "SELECT * FROM heroes WHERE heroID = ?";
             return jdbc.queryForObject(SELECT_HERO_BY_ID, new HeroMapper());
         } catch (DataAccessException ex) {
             return null;
