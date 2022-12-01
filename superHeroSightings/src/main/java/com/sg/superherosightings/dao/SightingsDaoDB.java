@@ -43,7 +43,7 @@ public class SightingsDaoDB implements SightingsDao {
 
     @Override
     public List<Sighting> getAllSightings() {
-        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sighting";
+        final String SELECT_ALL_SIGHTINGS = "SELECT * FROM sightings";
         List<Sighting> sightings = jdbc.query(SELECT_ALL_SIGHTINGS, new SightingMapper());
         addLocationsAndHeroForSightings(sightings);
         return sightings;
@@ -80,7 +80,7 @@ public class SightingsDaoDB implements SightingsDao {
 
     @Override
     public void updateSighting(Sighting sighting) {
-        final String UPDATE_SIGHTING = "UPDATE sighting SET heroID = ?, locationID =?, dateOfSighting = ? "
+        final String UPDATE_SIGHTING = "UPDATE sightings SET heroID = ?, locationID =?, dateOfSighting = ? "
                 + "WHERE sightingsID = ?";
         jdbc.update(UPDATE_SIGHTING,
                 sighting.getHero().getHeroID(),
