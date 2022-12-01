@@ -1,7 +1,6 @@
 package com.sg.superherosightings.dao;
 
 import com.sg.superherosightings.models.Address;
-import com.sg.superherosightings.models.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +33,7 @@ public class AddressesDaoDBTest {
     public void testAddAndGetAddress() {
         Address address = new Address();
         address.setAddressLine1("Test addressLine1");
+        address.setAddressLine2("Test addressLine2");
         address.setCity("Test city");
         address.setStateAbbreviation("TE");
         address.setZip("11111");
