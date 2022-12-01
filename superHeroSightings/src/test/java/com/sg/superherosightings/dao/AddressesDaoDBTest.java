@@ -1,6 +1,8 @@
 package com.sg.superherosightings.dao;
 
 import com.sg.superherosightings.models.Address;
+import com.sg.superherosightings.models.Location;
+import com.sg.superherosightings.models.Organization;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,13 +17,35 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AddressesDaoDBTest {
 
     @Autowired
+    HeroesDao heroesDao;
+
+    @Autowired
+    OrganizationsDao organizationsDao;
+
+    @Autowired
+    SightingsDao sightingsDao;
+
+    @Autowired
     AddressesDao addressesDao;
+
+    @Autowired
+    LocationsDao locationsDao;
 
     @BeforeEach
     void setUp() {
         List<Address> addresses = addressesDao.getAllAddresses();
         for (Address address : addresses) {
             addressesDao.deleteAddressByID(address.getAddressID());
+        }
+
+        List<Organization> organizationList = organizationsDao.getAllOrganizations();
+        for(Organization organization : organizationList){
+            organizationsDao.deleteOrganizationByID(organization.getOrganizationID());
+        }
+
+        List<Location> locationList = locationsDao.getAllLocations();
+        for(Location location : locationList){
+            locationsDao.deleteLocationByID(location.getLocationID());
         }
     }
 
@@ -85,6 +109,7 @@ public class AddressesDaoDBTest {
         assertNotEquals(address, fromDao);
 
         fromDao = addressesDao.getAddressesByID(address.getAddressID());
+        assertEquals(address, fromDao);
     }
 
     @Test

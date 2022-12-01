@@ -42,7 +42,7 @@ public class LocationsDaoDB implements LocationsDao
     @Transactional
     public Location addLocation(Location location) {
         final String INSERT_LOCATION = "INSERT INTO locations(locationId, locationName, locationDescription, " +
-                "locationAddress, locationLatitude, locationLongitude)" + "VALUES(?,?,?,?,?,?";
+                "locationAddress, locationLatitude, locationLongitude)" + " VALUES(?,?,?,?,?,?";
 
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
