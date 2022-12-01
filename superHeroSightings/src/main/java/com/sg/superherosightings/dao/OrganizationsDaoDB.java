@@ -15,19 +15,25 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class OrganizationsDaoDB implements OrganizationsDao {
-
-    private final JdbcTemplate jdbc;
+public class OrganizationsDaoDB implements OrganizationsDao
+{
+    //previous; does not compile
+    //private final JdbcTemplate jdbc;
+    //
+    //@Autowired
+    //public OrganizationsDaoDB(JdbcTemplate jdbc){
+    //    this.jdbc = jdbc;
+    //}
 
     @Autowired
-    public OrganizationsDaoDB(JdbcTemplate jdbc){
-        this.jdbc = jdbc;
-    }
+    JdbcTemplate jdbc;
 
-    public static final class OrganizationMapper implements RowMapper<Organization> {
+    public static final class OrganizationMapper implements RowMapper<Organization>
+    {
 
         @Override
-        public Organization mapRow(ResultSet rs, int index) throws SQLException {
+        public Organization mapRow(ResultSet rs, int index) throws SQLException
+        {
             Organization organization = new Organization();
             organization.setOrganizationID(rs.getInt("organizationID"));
             organization.setOrganizationName(rs.getString("organizationName"));
@@ -38,34 +44,39 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     }
 
     @Override
-    public Organization getOrganizationByID(int ID) {
-        try {
+    public Organization getOrganizationByID(int ID)
+    {
+        try
+        {
             final String SELECT_ORGANIZATION_BY_ID = "SELECT * FROM organizations WHERE organizationID = ?";
             Organization organization = jdbc.queryForObject(SELECT_ORGANIZATION_BY_ID, new OrganizationMapper(), ID);
-           return organization;
-        } catch (DataAccessException ex) {
-        return null;
-    }
+            return organization;
+        }
+        catch (DataAccessException ex)
+        {
+            return null;
+        }
     }
 
     @Override
-    public List<Organization> getAllOrganizations() {
-            final String  SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organizations";
-            List<Organization> organizations = jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
-            addMembersAndAddressToOrganizations(organizations);
-            return organizations;
+    public List<Organization> getAllOrganizations()
+    {
+        final String SELECT_ALL_ORGANIZATIONS = "SELECT * FROM organizations";
+        List<Organization> organizations = jdbc.query(SELECT_ALL_ORGANIZATIONS, new OrganizationMapper());
+        addMembersAndAddressToOrganizations(organizations);
+        return organizations;
     }
 
     @Override
     @Transactional
-    public Organization addOrganization(Organization organization) {
+    public Organization addOrganization(Organization organization)
+    {
         final String INSERT_ORGANIZATION = "INSERT INTO organizations(organizationName,organizationDescription, addressID)"
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_ORGANIZATION,
                 organization.getOrganizationID(),
                 organization.getOrganizationDescription(),
                 organization.getAddress().getAddressID());
-
 
         int newID = jdbc.queryForObject(("SELECT_LAST_INSERT_ID()"), Integer.class);
         organization.setOrganizationID(newID);
@@ -74,7 +85,8 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     }
 
     @Override
-    public void updateOrganization(Organization organization) {
+    public void updateOrganization(Organization organization)
+    {
         final String UPDATE_ORGANIZATION = "UPDATE organizations SET organizationName = ?, organizationDescription = ?, addressID = ?"
                 + " WHERE OrganizationID = ?";
         jdbc.update(UPDATE_ORGANIZATION,
@@ -87,7 +99,8 @@ public class OrganizationsDaoDB implements OrganizationsDao {
 
     @Override
     @Transactional
-    public void deleteOrganizationByID(int ID) {
+    public void deleteOrganizationByID(int ID)
+    {
 
         final String DELETE_MEMBERS = "DELETE FROM members WHERE organizationID =?";
         jdbc.update(DELETE_MEMBERS, ID);
@@ -98,16 +111,18 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     }
 
     @Override
-    public Address getAddressForOrganization(Organization organization) {
+    public Address getAddressForOrganization(Organization organization)
+    {
         final String SELECT_ORGANIZATIONS_FOR_ADDRESS = "SELECT a.* FROM addresses a" + "" +
                 "JOIN organizations o ON a.addressID = o.addressID WHERE organizationID = ?";
-        return jdbc.queryForObject(SELECT_ORGANIZATIONS_FOR_ADDRESS, new AddressesDaoDB.AddressMapper(), organization.getOrganizationID());
+        return jdbc.queryForObject(SELECT_ORGANIZATIONS_FOR_ADDRESS, new AddressesDaoDB.AddressMapper(),
+                organization.getOrganizationID());
     }
 
-
-
-    public void addMembersAndAddressToOrganizations(List<Organization> organizationList) {
-        for(Organization organization: organizationList){
+    public void addMembersAndAddressToOrganizations(List<Organization> organizationList)
+    {
+        for (Organization organization : organizationList)
+        {
             organization.setAddress(getAddressForOrganization(organization));
             organization.setMembers(getMembersForOrganization(organization));
         }
@@ -115,36 +130,43 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     }
 
     @Override
-    public void insertOrganizationMember(Organization organization) {
+    public void insertOrganizationMember(Organization organization)
+    {
         final String INSERT_ORGANIZATION_MEMBER = "INSERT INTO members(heroID, organizationID) VALUES (?,?)";
-        for(Hero heroes : organization.getMembers()){
+        for (Hero heroes : organization.getMembers())
+        {
             jdbc.update(INSERT_ORGANIZATION_MEMBER, heroes.getHeroID(), organization.getOrganizationID());
         }
 
     }
 
     @Override
-    public List<Hero> getMembersForOrganization(Organization organization) {
+    public List<Hero> getMembersForOrganization(Organization organization)
+    {
         final String SELECT_HEROES_FOR_ORGANIZATION = "SELECT * FROM heroes " +
                 "JOIN members ON heroes.heroID = members.heroId WHERE members.organizationID =?";
-        return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(), organization.getOrganizationID());
+        return jdbc.query(SELECT_HEROES_FOR_ORGANIZATION, new HeroesDaoDB.HeroMapper(),
+                organization.getOrganizationID());
     }
-    
+
     @Override
-    List<Organization> getOrganizationsForHero(Hero hero){
+    public List<Organization> getOrganizationsForHero(Hero hero)
+    {
+        return null;
         // Needs to be implemented. Will return a list of organizations that a hero is in.
     }
 
     @Override
-    public void addMembersToOrganizations(List<Organization> organizationList) {
-        for(Organization organization: organizationList){
+    public void addMembersToOrganizations(List<Organization> organizationList)
+    {
+        for (Organization organization : organizationList)
+        {
             organization.setMembers(getMembersForOrganization(organization));
         }
 
     }
 
-
-    }
+}
 
 
 
