@@ -23,8 +23,8 @@ public class HeroesDaoDB  implements HeroesDao {
     @Override
     public Hero getHeroesByID(int heroID) {
         try {
-            final String SELECT_HERO_BY_ID = "SELECT * FROM Hero WHERE HeroID = ?";
-            return jdbc.queryForObject(SELECT_HERO_BY_ID, new HeroMapper());
+            final String SELECT_HERO_BY_ID = "SELECT * FROM heroes WHERE heroID = ?";
+            return jdbc.queryForObject(SELECT_HERO_BY_ID, new HeroMapper(), heroID);
         } catch (DataAccessException ex) {
             return null;
         }
@@ -42,8 +42,8 @@ public class HeroesDaoDB  implements HeroesDao {
     @Override
     @Transactional
     public Hero addHeroes(Hero hero) {
-        final String INSERT_HERO = "INSERT INTO heroes(heroName, heroDescription, superPower)" +
-                "VALUES(?,?,?,?";
+        final String INSERT_HERO = "INSERT INTO heroes(heroName, heroDescription, superPower) " +
+                "VALUES(?,?,?)";
         jdbc.update(INSERT_HERO,
                 hero.getHeroName(),
                 hero.getHeroDescription(),
@@ -56,13 +56,13 @@ public class HeroesDaoDB  implements HeroesDao {
 
     @Override
     public void updateHeroes(Hero hero) {
-        final String UPDATE_HERO = "UPDATE heroes SET heroName = ?, heroDescription = ?, superPower =?" +
+        final String UPDATE_HERO = "UPDATE heroes SET heroName = ?, heroDescription = ?, superPower = ? " +
                 "WHERE heroID = ?";
         jdbc.update(UPDATE_HERO,
-                hero.getHeroID(),
                 hero.getHeroName(),
                 hero.getHeroDescription(),
-                hero.getSuperPower());
+                hero.getSuperPower(),
+                hero.getHeroID());
     }
 
     @Override
@@ -80,8 +80,9 @@ public class HeroesDaoDB  implements HeroesDao {
 
     @Override
     public List<Organization> getOrganizationsForHero(Hero hero) {
-        final String GET_ORGANIZATIONS_FOR_HERO = "SELECT o.* FROM organizations o " +
-                "JOIN heroes h o.heroID = h.heroID WHERE h.heroID =?";
+        final String GET_ORGANIZATIONS_FOR_HERO = "SELECT * FROM organizations " +
+                "JOIN members ON organizations.organizationID = members.organizationID " +
+                "JOIN heroes ON members.heroID = heroes.heroID WHERE heroes.heroID = ?";
         return jdbc.query(GET_ORGANIZATIONS_FOR_HERO, new OrganizationsDaoDB.OrganizationMapper(), hero.getHeroID());
     }
 
