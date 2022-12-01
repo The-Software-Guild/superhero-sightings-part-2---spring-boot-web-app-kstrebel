@@ -1,5 +1,7 @@
 package com.sg.superherosightings.models;
 
+import java.util.Objects;
+
 public class Address
 {
     private int addressID;
@@ -70,61 +72,74 @@ public class Address
     }
 
     @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + addressID;
-        result = prime * result + ((addressLine1 == null) ? 0 : addressLine1.hashCode());
-        result = prime * result + ((addressLine2 == null) ? 0 : addressLine2.hashCode());
-        result = prime * result + ((city == null) ? 0 : city.hashCode());
-        result = prime * result + ((stateAbbreviation == null) ? 0 : stateAbbreviation.hashCode());
-        result = prime * result + ((zip == null)? 0 : zip.hashCode());
-        return result;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return getAddressID() == address.getAddressID() && getAddressLine1().equals(address.getAddressLine1()) && Objects.equals(getAddressLine2(), address.getAddressLine2()) && getCity().equals(address.getCity()) && getStateAbbreviation().equals(address.getStateAbbreviation()) && getZip().equals(address.getZip());
     }
 
     @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Address other = (Address) obj;
-        if (addressID != other.addressID)
-            return false;
-        if (addressLine1 == null)
-        {
-            if (other.addressLine1 != null)
-                return false;
-        }
-        else if (!addressLine1.equals(other.addressLine1))
-            return false;
-        if (addressLine2 == null)
-        {
-            if (other.addressLine2 != null)
-                return false;
-        }
-        else if (!addressLine2.equals(other.addressLine2))
-            return false;
-        if (city == null)
-        {
-            if (other.city != null)
-                return false;
-        }
-        else if (!city.equals(other.city))
-            return false;
-        if (stateAbbreviation == null)
-        {
-            if (other.stateAbbreviation != null)
-                return false;
-        }
-        else if (!stateAbbreviation.equals(other.stateAbbreviation))
-            return false;
-        if (zip != other.zip)
-            return false;
-        return true;
+    public int hashCode() {
+        return Objects.hash(getAddressID(), getAddressLine1(), getAddressLine2(), getCity(), getStateAbbreviation(), getZip());
     }
+
+//    @Override
+//    public int hashCode()
+//    {
+//        final int prime = 31;
+//        int result = 1;
+//        result = prime * result + addressID;
+//        result = prime * result + ((addressLine1 == null) ? 0 : addressLine1.hashCode());
+//        result = prime * result + ((addressLine2 == null) ? 0 : addressLine2.hashCode());
+//        result = prime * result + ((city == null) ? 0 : city.hashCode());
+//        result = prime * result + ((stateAbbreviation == null) ? 0 : stateAbbreviation.hashCode());
+//        result = prime * result + ((zip == null)? 0 : zip.hashCode());
+//        return result;
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj)
+//    {
+//        if (this == obj)
+//            return true;
+//        if (obj == null)
+//            return false;
+//        if (getClass() != obj.getClass())
+//            return false;
+//        Address other = (Address) obj;
+//        if (addressID != other.addressID)
+//            return false;
+//        if (addressLine1 == null)
+//        {
+//            if (other.addressLine1 != null)
+//                return false;
+//        }
+//        else if (!addressLine1.equals(other.addressLine1))
+//            return false;
+//        if (addressLine2 == null)
+//        {
+//            if (other.addressLine2 != null)
+//                return false;
+//        }
+//        else if (!addressLine2.equals(other.addressLine2))
+//            return false;
+//        if (city == null)
+//        {
+//            if (other.city != null)
+//                return false;
+//        }
+//        else if (!city.equals(other.city))
+//            return false;
+//        if (stateAbbreviation == null)
+//        {
+//            if (other.stateAbbreviation != null)
+//                return false;
+//        }
+//        else if (!stateAbbreviation.equals(other.stateAbbreviation))
+//            return false;
+//        if (zip != other.zip)
+//            return false;
+//        return true;
+//    }
 }
