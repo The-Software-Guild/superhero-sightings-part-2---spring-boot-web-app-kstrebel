@@ -64,14 +64,14 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     @Transactional
     public Organization addOrganization(Organization organization)
     {
-        final String INSERT_ORGANIZATION = "INSERT INTO organizations(organizationName,organizationDescription, addressID)"
+        final String INSERT_ORGANIZATION = "INSERT INTO organizations(organizationName,organizationDescription, addressID) "
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_ORGANIZATION,
                 organization.getOrganizationID(),
                 organization.getOrganizationDescription(),
                 organization.getAddress().getAddressID());
 
-        int newID = jdbc.queryForObject(("SELECT_LAST_INSERT_ID()"), Integer.class);
+        int newID = jdbc.queryForObject(("SELECT LAST_INSERT_ID()"), Integer.class);
         organization.setOrganizationID(newID);
         insertOrganizationMember(organization);
         return organization;
@@ -106,7 +106,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     @Override
     public Address getAddressForOrganization(Organization organization)
     {
-        final String SELECT_ORGANIZATIONS_FOR_ADDRESS = "SELECT a.* FROM addresses a" + "" +
+        final String SELECT_ORGANIZATIONS_FOR_ADDRESS = "SELECT * FROM addresses a " +
                 "JOIN organizations o ON a.addressID = o.addressID WHERE organizationID = ?";
         return jdbc.queryForObject(SELECT_ORGANIZATIONS_FOR_ADDRESS, new AddressesDaoDB.AddressMapper(),
                 organization.getOrganizationID());

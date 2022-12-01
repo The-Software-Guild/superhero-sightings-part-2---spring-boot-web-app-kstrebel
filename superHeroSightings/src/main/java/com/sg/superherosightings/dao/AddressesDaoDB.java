@@ -104,12 +104,12 @@ public class AddressesDaoDB implements AddressesDao {
         final String UPDATE_ADDRESS = "UPDATE addresses SET addressLine1 = ?, addressLine2 = ?, city = ?, stateAbbreviation = ?, zip = ?"
                 + "WHERE addressID = ?";
         jdbc.update(UPDATE_ADDRESS,
-                address.getAddressID(),
                 address.getAddressLine1(),
                 address.getAddressLine2(),
                 address.getCity(),
                 address.getStateAbbreviation(),
-                address.getZip());
+                address.getZip(),
+                address.getAddressID());
     }
 
     @Override
