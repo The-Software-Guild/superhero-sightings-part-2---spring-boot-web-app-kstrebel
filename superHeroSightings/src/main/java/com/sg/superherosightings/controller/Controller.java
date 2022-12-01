@@ -2,6 +2,9 @@ package com.sg.superherosightings.controller;
 
 import com.sg.superherosightings.dao.*;
 import com.sg.superherosightings.models.*;
+
+import ch.qos.logback.core.model.Model;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,9 @@ public class Controller {
 
     private final SightingsDao sightingsDao;
 
-    public Controller(AddressesDao addressesDao, HeroesDao heroesDao, LocationsDao locationsDao, OrganizationsDao organizationsDao, SightingsDao sightingsDao) {
+    public Controller(AddressesDao addressesDao, HeroesDao heroesDao, LocationsDao locationsDao,
+            OrganizationsDao organizationsDao, SightingsDao sightingsDao)
+    {
         this.addressesDao = addressesDao;
         this.heroesDao = heroesDao;
         this.locationsDao = locationsDao;
@@ -33,6 +38,12 @@ public class Controller {
         this.sightingsDao = sightingsDao;
     }
 
+    @GetMapping("hero")
+    public String heroPage(Model model)
+    {
+        return "hero";
+    }
+    
     @PostMapping("/addHero")
     @ResponseStatus(HttpStatus.CREATED)
     public Hero createHero(@RequestBody Hero body){
