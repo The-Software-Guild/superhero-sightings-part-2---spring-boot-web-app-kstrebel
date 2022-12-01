@@ -1,9 +1,9 @@
 $(document).ready(function(){
-    loadOrganizations();
-    addOrganization();
+    loadLocations();
+    addLocation();
 });
 
-function loadOrganizations(){
+function loadLocations(){
     clearLocationTable();
     var contentRows = $('#contentRows');
 
@@ -38,7 +38,7 @@ function loadOrganizations(){
     })
 }
 
-function addOrganization(){
+function addLocation(){
     $('#addButton').click(function(event) {
 
         var haveValidationErrors = checkAndDisplayValidationErrors($('#addForm').find('input'));
@@ -82,7 +82,7 @@ function addOrganization(){
                 $('#addLocationDescription').val('');
                 $('#addLatitude').float(0);
                 $('#addLongitude').float(0);
-                loadOrganizations();
+                loadLocations();
             },
             error: function() {
                 $('#errorMessages')
@@ -173,7 +173,7 @@ function updateLocation(locationID) {
             'success': function(){
                 $('#errorMessage').empty();
                 hideEditForm();
-                loadOrganizations();
+                loadLocations();
             },
             error: function() {
                 $('#errorMessages')
@@ -192,7 +192,7 @@ function deleteLocation(locationID){
         type: 'DELETE',
         url: 'http://localhost:8083/api/locations' + locationID,
         success: function(){
-            loadOrganizations();
+            loadLocations();
         }
     });
 }
