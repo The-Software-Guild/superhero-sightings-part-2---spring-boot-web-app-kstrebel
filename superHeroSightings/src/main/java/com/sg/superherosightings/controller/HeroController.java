@@ -1,5 +1,3 @@
-//Controller to serve web pages
-
 package com.sg.superherosightings.controller;
 
 import java.util.ArrayList;
@@ -15,9 +13,14 @@ import com.sg.superherosightings.models.Hero;
 import org.springframework.ui.Model;
 
 @Controller
-public class SiteController
+public class HeroController
 {
     HeroesDao heroesDao = new HeroesDaoDB();
+
+    public HeroController(HeroesDao heroesDao)
+    {
+        this.heroesDao = heroesDao;
+    }
 
     @GetMapping("/heroes")
     public String viewHeroes(Model model)
@@ -26,29 +29,5 @@ public class SiteController
 
         model.addAttribute("heroList", heroesList);
         return "viewHeroes";
-    }
-
-    @GetMapping("/addresses")
-    public String viewAddresses(Model model)
-    {
-        return "viewAddresses";
-    }
-
-    @GetMapping("/locations")
-    public String viewLocations(Model model)
-    {
-        return "viewLocations";
-    }
-
-    @GetMapping("/organizations")
-    public String viewOrganizations(Model model)
-    {
-        return "viewOrganizations";
-    }
-
-    @GetMapping("/sightings")
-    public String viewSightings(Model model)
-    {
-        return "viewSightings";
     }
 }

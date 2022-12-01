@@ -1,5 +1,3 @@
-//Controller for all API calls
-
 package com.sg.superherosightings.controller;
 
 import com.sg.superherosightings.dao.*;
