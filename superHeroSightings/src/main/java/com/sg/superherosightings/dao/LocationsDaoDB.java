@@ -24,7 +24,8 @@ public class LocationsDaoDB implements LocationsDao
     public Location getLocationByID(int ID) {
         try {
             final String SELECT_LOCATION_BY_ID = "SELECT * FROM locations WHERE locationID = ?";
-            return jdbc.queryForObject(SELECT_LOCATION_BY_ID, new LocationMapper(), ID);
+            Location location = jdbc.queryForObject(SELECT_LOCATION_BY_ID, new LocationMapper(), ID);
+            location.setAddress(getAddressForLocation(location));
         } catch (DataAccessException ex) {
             return null;
         }

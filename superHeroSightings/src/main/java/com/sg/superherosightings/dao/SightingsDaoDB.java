@@ -27,6 +27,8 @@ public class SightingsDaoDB implements SightingsDao {
         try {
             final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sightings WHERE sightingsID = ?";
             Sighting sighting = jdbc.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), ID);
+            sighting.setHero(getHeroForSighting(sighting));
+            sighting.setLocation(getLocationForSighting(sighting));
            return sighting;
         } catch (DataAccessException ex) {
             return null;
