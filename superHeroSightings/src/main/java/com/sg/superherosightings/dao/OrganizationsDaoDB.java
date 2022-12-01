@@ -126,11 +126,10 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     public void insertOrganizationMember(Organization organization)
     {
         final String INSERT_ORGANIZATION_MEMBER = "INSERT INTO members(heroID, organizationID) VALUES (?,?)";
-        for (Hero heroes : organization.getMembers())
+        for (Hero hero : organization.getMembers())
         {
-            jdbc.update(INSERT_ORGANIZATION_MEMBER, heroes.getHeroID(), organization.getOrganizationID());
+            jdbc.update(INSERT_ORGANIZATION_MEMBER, hero.getHeroID(), organization.getOrganizationID());
         }
-
     }
 
     @Override
