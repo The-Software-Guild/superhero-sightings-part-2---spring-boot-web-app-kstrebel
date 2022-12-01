@@ -1,3 +1,5 @@
+//Controller for all API calls
+
 package com.sg.superherosightings.controller;
 
 import com.sg.superherosightings.dao.*;
@@ -32,7 +34,7 @@ public class Controller {
         this.organizationsDao = organizationsDao;
         this.sightingsDao = sightingsDao;
     }
-
+    
     @PostMapping("/addHero")
     @ResponseStatus(HttpStatus.CREATED)
     public Hero createHero(@RequestBody Hero body){
@@ -82,7 +84,7 @@ public class Controller {
     public void updateLocation(@PathVariable int locationID, @RequestBody Location location, Address address){
         if (address != null){
 
-            location.setAddress(addressesDao.addAddresses(address));
+            location.setAddress(addressesDao.updateAddresses(address));
         }
         locationsDao.updateLocation(location);
     }
@@ -92,7 +94,7 @@ public class Controller {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateOrganization(@PathVariable int organizationID, @RequestBody Organization organization, Address address){
         if (address != null){
-            organization.setAddress(addressesDao.addAddresses(address));
+            organization.setAddress(addressesDao.updateAddresses(address));
         }
         organizationsDao.updateOrganization(organization);
     }
@@ -141,10 +143,11 @@ public class Controller {
         sightingsDao.deleteSightingByID(sightingID);
     }
 
-    @GetMapping("/heroes")
-    public List<Hero> getAllHeroes() {
-        return heroesDao.getAllHeroes();
-    }
+    //Moved to SiteController
+    //@GetMapping("/heroes")
+    //public List<Hero> getAllHeroes() {
+    //    return heroesDao.getAllHeroes();
+    //}
 
     @GetMapping("/locations")
     public List<Location> getAllLocations() {
