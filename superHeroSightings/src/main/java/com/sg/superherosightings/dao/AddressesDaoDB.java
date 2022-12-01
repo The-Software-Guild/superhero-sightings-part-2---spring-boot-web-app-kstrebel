@@ -18,13 +18,16 @@ import java.util.List;
 
 @Repository
 public class AddressesDaoDB implements AddressesDao {
-
-    private final JdbcTemplate jdbc;
-
+    //previous; does not compile
+    //private final JdbcTemplate jdbc;
+    //
+    //@Autowired
+    //public AddressesDaoDB(JdbcTemplate jdbc){
+    //    this.jdbc = jdbc;
+    //}
+    
     @Autowired
-    public AddressesDaoDB(JdbcTemplate jdbc){
-        this.jdbc = jdbc;
-    }
+    JdbcTemplate jdbc;
 
 
     public static final class AddressMapper implements RowMapper<Address> {

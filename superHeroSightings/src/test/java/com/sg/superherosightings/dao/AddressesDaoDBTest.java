@@ -22,7 +22,7 @@ public class AddressesDaoDBTest {
     void setUp() {
         List<Address> addresses = addressesDao.getAllAddresses();
         for (Address address : addresses) {
-            addressesDao.deleteAddressByID(address.getId());
+            addressesDao.deleteAddressByID(address.getAddressID());
         }
     }
 
