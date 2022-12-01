@@ -116,11 +116,12 @@ public class SuperheroSightingsServiceImpl implements SuperheroSightingsService
         return locationsDao.getLocationByID(id);
     }
 
-    @Override
-    public List<Location> getLocationsByAddress(Address address)
-    {
-        return locationsDao.getLocationsForAddress(address);
-    }
+    //removed...?
+    //@Override
+    //public List<Location> getLocationsByAddress(Address address)
+    //{
+    //    return locationsDao.getLocationsByAddress(address);
+    //}
 
     @Override
     public void updateLocation(Location location)
@@ -172,16 +173,28 @@ public class SuperheroSightingsServiceImpl implements SuperheroSightingsService
         organizationsDao.updateOrganization(organization);
     }
 
-    @Override
-    public void addOrganizationMember(Organization organization, int heroID)
-    {
-        organizationsDao.insertOrganizationMember(organization, heroID);
-    }
+    //@Override
+    //public void addOrganizationMember(Organization organization, int heroID)
+    //{
+    //    organizationsDao.insertOrganizationMember(organization, heroID);
+    //}
 
     @Override
-    public void addMemberOrganizations(int heroID, List<Organization> organizations)
+    public void addOrganizationMember(Organization organization)
     {
-        organizationsDao.addMembersToOrganizations(heroID, organizations);
+        organizationsDao.insertOrganizationMember(organization);
+    }
+
+    //@Override
+    //public void addMemberOrganizations(int heroID, List<Organization> organizations)
+    //{
+    //    organizationsDao.addMembersToOrganizations(heroID, organizations);
+    //}
+
+    @Override
+    public void addMemberOrganizations(List<Organization> organizations)
+    {
+        organizationsDao.addMembersToOrganizations(organizations);
     }
 
     @Override
