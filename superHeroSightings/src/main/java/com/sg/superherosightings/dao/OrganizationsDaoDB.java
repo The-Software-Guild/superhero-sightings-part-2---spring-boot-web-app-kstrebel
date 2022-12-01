@@ -17,12 +17,8 @@ import java.util.List;
 @Repository
 public class OrganizationsDaoDB implements OrganizationsDao {
 
-    private final JdbcTemplate jdbc;
-
     @Autowired
-    public OrganizationsDaoDB(JdbcTemplate jdbc){
-        this.jdbc = jdbc;
-    }
+    JdbcTemplate jdbc;
 
     public static final class OrganizationMapper implements RowMapper<Organization> {
 
@@ -131,8 +127,8 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     }
     
     @Override
-    List<Organization> getOrganizationsForHero(Hero hero){
-        // Needs to be implemented. Will return a list of organizations that a hero is in.
+   public List<Organization> getOrganizationsForHero(Hero hero){
+        return null;
     }
 
     @Override
