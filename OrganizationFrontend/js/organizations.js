@@ -9,19 +9,19 @@ function loadOrganizations(){
 
     $.ajax({
         type: 'GET',
-        url: 'http://localhost:8083/api/locations',
-        success: function(locationArray){
-            $.each(locationArray, function(index, location){
-                var name = location.locationName;
-                var address = location.locationAddressLine1 + '\n' + location.locationAddressLine2;
-                var description = location.locationDescription;
+        url: 'http://localhost:8083/api/organizations',
+        success: function(organizationArray){
+            $.each(organizationArray, function(index, organization){
+                var name = organization.organizationName;
+                var description = organization.organizationDescription;
+                var members = organization.Members;
 
                 var row = '<tr>';
                     row += '<td>' + name + '</td>';
-                    row += '<td>' + address + '</td>';
                     row += '<td>' + description + '</td>';
+                    row += '<td>' + members + '</td>';
                     row += '<td><button type="button" class="btn btn-info" onclick"showEditForm()">Edit</button></td>';
-                    row += '<td><button type="button" class="btn btun-danger" onclick"deleteLocation('+ locationID + ')">Delete</button></td>';
+                    row += '<td><button type="button" class="btn btun-danger" onclick"deleteLocation('+ organizationID + ')">Delete</button></td>';
                     row += '</tr>';
                 
                 contentRows.append(row);
@@ -49,7 +49,7 @@ function addOrganization(){
         
         $.ajax({
             type:'POST',
-            url: 'http://localhost:8083/api/addLocation',
+            url: 'http://localhost:8083/api/addOrganization',
             data: {
                 'Address': [{
                     'addressLine1': $('#addAddressLine1').val(),
@@ -59,11 +59,9 @@ function addOrganization(){
                     'zip': $('#addZip').val()
 
                 }],
-                'Location': [{
-                    'locationName': $('#addLocationName').val(),
-                    'locationDescription': $('#addLocationDescription').val(),
-                    'locationLatitude': $('#addLatitude').float(),
-                    'locationLongitude': $('#addLongitude').float()
+                'Organization': [{
+                    'organizationName': $('#addOrganizationName').val(),
+                    'organizationDescription': $('#addOrganizationDescription').val(),
                 }]
             },
             headers: {
@@ -73,15 +71,14 @@ function addOrganization(){
             'dataType': 'json',
             success: function(){
                 $('#errorMessages').empty();
-                $('#addLocationName').val('');
+                $('#addOrganizationnName').val('');
                 $('#addAddressLine1').val('');
                 $('#addAddressLine2').val('');
                 $('#addCity').val('');
                 $('#addState').val('');
                 $('#addZip').val('');
-                $('#addLocationDescription').val('');
-                $('#addLatitude').float(0);
-                $('#addLongitude').float(0);
+                $('#addOrganizationDescription').val('');
+                $('#addMembers').val('');
                 loadOrganizations();
             },
             error: function() {
@@ -101,35 +98,33 @@ function clearLocationTable(){
 
 function hideEditForm(){
     $('#errorMessages').empty();
-    $('#editLocationName').val('');
+    $('#editOrganizationName').val('');
     $('#editAddressLine1').val('');
     $('#editAddressLine2').val('');
     $('#editCity').val('');
     $('#editState').val('');
     $('#editZip').val('');
-    $('#editLocationDescription').val('');
-    $('#editLatitude').float(0);
-    $('#editLongitude').float(0);
-    $('#locationTableDiv').show();
+    $('#editOrganizationDescription').val('');
+    $('#editMembers').val('');
+    $('#organizationTableDiv').show();
     $('#editFormDiv').hide();
 }
 
-function showEditForm(locationID){
+function showEditForm(organizationID){
     $('#errorMessages').empty();
 
     $.ajax ({
         type: 'GET',
-        url: 'http://localhost:8083/api/locations/' + locationID,
+        url: 'http://localhost:8083/api/organizations/' + organizationID,
         success: function(data, status) {
-            $('#editLocationName').val(data.locationName);
-            $('#editLocationDescription').val(data.locationDescription);
-            $('#editLatitude').val(data.locationLatitude);
-            $('#editLongitude').val(data.locationLongitude);
+            $('#editOrganizationName').val(data.organizationName);
+            $('#editLocationDescription').val(data.organizationDescription);
             $('#editAddressLine1').val(data.addressLine1);
             $('#editAddressLine2').val(data.addressLine2);
             $('#editCity').val(data.city);
             $('#editState').val(data.state);
             $('#editZip').val(data.zip);
+            $('#editMembers').val(data.members)
         },
         error: function() {
             $('#errorMessages')
@@ -139,15 +134,15 @@ function showEditForm(locationID){
         }
     })
 
-    $('#locationTableDiv').hide();
+    $('#organizationTableDiv').hide();
     $('#editFormDiv').show();
 }
 
-function updateLocation(locationID) {
+function updateOrganization(organizationID) {
     $('#updateButton').click(function(event){
         $.ajax({
             type: 'PUT',
-            url: 'http://localhost:8083/api/locations' + $('#editLocationID').val(),
+            url: 'http://localhost:8083/api/organizations/'+ $('#editOrganizationID').val(),
             data: {
                 'Address': [{
                     'addressLine1': $('#editAddressLine1').val(),
@@ -157,11 +152,9 @@ function updateLocation(locationID) {
                     'zip': $('#editZip').val()
 
                 }],
-                'Location': [{
-                    'locationName': $('#editLocationName').val(),
-                    'locationDescription': $('#editLocationDescription').val(),
-                    'locationLatitude': $('#editLatitude').float(),
-                    'locationLongitude': $('#editLongitude').float()
+                'Organization': [{
+                    'organizationName': $('#editLocationName').val(),
+                    'organizationDescription': $('#editOrganizationDescription').val(),
                 }]
             },
             headers: {
@@ -187,10 +180,10 @@ function updateLocation(locationID) {
 }
 
 
-function deleteLocation(locationID){
+function deleteLocation(organizationID){
     $.ajax({
         type: 'DELETE',
-        url: 'http://localhost:8083/api/locations' + locationID,
+        url: 'http://localhost:8083/api/organizations/' + organizationID,
         success: function(){
             loadOrganizations();
         }
