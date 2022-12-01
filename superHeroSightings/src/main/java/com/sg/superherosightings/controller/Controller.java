@@ -1,5 +1,3 @@
-//Controller for all API calls
-
 package com.sg.superherosightings.controller;
 
 import com.sg.superherosightings.dao.*;
@@ -143,11 +141,10 @@ public class Controller {
         sightingsDao.deleteSightingByID(sightingID);
     }
 
-    //Moved to SiteController
-    //@GetMapping("/heroes")
-    //public List<Hero> getAllHeroes() {
-    //    return heroesDao.getAllHeroes();
-    //}
+    @GetMapping("/allHeroes")
+    public List<Hero> getAllHeroes() {
+        return heroesDao.getAllHeroes();
+    }
 
     @GetMapping("/locations")
     public List<Location> getAllLocations() {
