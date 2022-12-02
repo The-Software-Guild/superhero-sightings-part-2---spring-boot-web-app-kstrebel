@@ -23,8 +23,19 @@ public class LocationsDaoDB implements LocationsDao
     @Autowired
     AddressesDao adao;
 
-    @Autowired
-    SightingsDao sDao;
+    public static final class LocationMapper implements RowMapper<Location> {
+
+        @Override
+        public Location mapRow(ResultSet rs, int index) throws SQLException {
+            Location location = new Location();
+            location.setLocationID(rs.getInt("locationID"));
+            location.setLocationName(rs.getString("locationName"));
+            location.setLocationDescription(rs.getString("locationDescription"));
+            location.setLocationLatitude(rs.getFloat("locationLatitude"));
+            location.setLocationLongitude(rs.getFloat("locationLongitude"));
+            return location;
+        }
+    }
 
     @Override
     public Location getLocationByID(int ID) {
@@ -32,6 +43,7 @@ public class LocationsDaoDB implements LocationsDao
             final String SELECT_LOCATION_BY_ID = "SELECT * FROM locations WHERE locationID = ?";
             Location location = jdbc.queryForObject(SELECT_LOCATION_BY_ID, new LocationMapper(), ID);
             location.setAddress(getAddressForLocation(location));
+            System.out.println(location.getAddress().getCity());
             return location;
         } catch (DataAccessException ex) {
             return null;
@@ -103,21 +115,6 @@ public class LocationsDaoDB implements LocationsDao
         }
 
     }
-
-
-    public static final class LocationMapper implements RowMapper<Location> {
-
-        @Override
-        public Location mapRow(ResultSet rs, int index) throws SQLException {
-            Location location = new Location();
-            location.setLocationID(rs.getInt("locationID"));
-            location.setLocationName(rs.getString("locationName"));
-            location.setLocationDescription(rs.getString("locationDescription"));
-            location.setLocationLatitude(rs.getFloat("locationLatitude"));
-            location.setLocationLongitude(rs.getFloat("locationLongitude"));
-        return location;
-            }
-        }
     }
 
 

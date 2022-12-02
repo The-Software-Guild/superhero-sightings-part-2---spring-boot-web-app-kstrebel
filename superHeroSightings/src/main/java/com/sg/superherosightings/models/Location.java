@@ -116,7 +116,7 @@ public class Location
             if (other.address != null)
                 return false;
         }
-        else if (!address.equals(other.address))
+        else if (address.getAddressID() != other.address.getAddressID())
             return false;
         if (Float.floatToIntBits(locationLatitude) != Float.floatToIntBits(other.locationLatitude))
             return false;
