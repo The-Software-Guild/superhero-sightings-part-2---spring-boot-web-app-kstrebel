@@ -15,6 +15,7 @@ function loadLocations(){
                 var name = location.locationName;
                 var address = location.locationAddressLine1 + '\n' + location.locationAddressLine2;
                 var description = location.locationDescription;
+                var locationID = location.locationID;
 
                 var row = '<tr>';
                     row += '<td>' + name + '</td>';

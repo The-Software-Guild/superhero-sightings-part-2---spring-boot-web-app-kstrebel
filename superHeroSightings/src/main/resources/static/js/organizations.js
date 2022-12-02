@@ -15,13 +15,14 @@ function loadOrganizations(){
                 var name = organization.organizationName;
                 var description = organization.organizationDescription;
                 var members = organization.Members;
+                var organizationID = organization.organizationID;
 
                 var row = '<tr>';
                     row += '<td>' + name + '</td>';
                     row += '<td>' + description + '</td>';
                     row += '<td>' + members + '</td>';
                     row += '<td><button type="button" class="btn btn-info" onclick"showEditForm()">Edit</button></td>';
-                    row += '<td><button type="button" class="btn btun-danger" onclick"deleteLocation('+ organizationID + ')">Delete</button></td>';
+                    row += '<td><button type="button" class="btn btn-danger" onclick"deleteLocation('+ organizationID + ')">Delete</button></td>';
                     row += '</tr>';
                 
                 contentRows.append(row);
