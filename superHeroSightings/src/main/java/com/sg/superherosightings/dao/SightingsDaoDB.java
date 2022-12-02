@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -22,15 +23,32 @@ public class SightingsDaoDB implements SightingsDao {
     @Autowired
     JdbcTemplate jdbc;
 
+    @Autowired
+    LocationsDao lDao;
+
+    public static final class SightingMapper implements RowMapper<Sighting> {
+
+        @Override
+        public Sighting mapRow(ResultSet rs, int index) throws SQLException {
+            Sighting sighting = new Sighting();
+            sighting.setSightingID(rs.getInt("sightingsID"));
+            sighting.setDateOfSighting(Date.valueOf(rs.getDate("dateOfSighting").toString()).toLocalDate());
+            return sighting;
+        }
+    }
+
     @Override
     public Sighting getSightingByID(int ID) {
         try {
             final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sightings WHERE sightingsID = ?";
             Sighting sighting = jdbc.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), ID);
             sighting.setHero(getHeroForSighting(sighting));
+            System.out.println(sighting.getHero().getHeroID());
             sighting.setLocation(getLocationForSighting(sighting));
+            System.out.println(sighting.getLocation().getLocationID());
            return sighting;
         } catch (DataAccessException ex) {
+            System.out.println("Data Access Exception");
             return null;
         }
     }
@@ -38,7 +56,9 @@ public class SightingsDaoDB implements SightingsDao {
     private Location getLocationForSighting(Sighting sighting) {
         final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM locations l " +
                 "JOIN sightings s ON s.locationID = l.locationID WHERE s.sightingsID = ?";
-        return jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationsDaoDB.LocationMapper(), sighting.getLocation());
+        Location location = jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationsDaoDB.LocationMapper(), sighting.getSightingID());
+        lDao.getAddressForLocation(location);
+        return location;
     }
 
     @Override
@@ -71,10 +91,10 @@ public class SightingsDaoDB implements SightingsDao {
         jdbc.update(INSERT_SIGHTING,
                 sighting.getHero().getHeroID(),
                 sighting.getLocation().getLocationID(),
-                sighting.getDateOfSighting());
+                sighting.getDateOfSighting().toString());
 
         int newID = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        sighting.setLocationID(newID);
+        sighting.setSightingID(newID);
         return sighting;
     }
 
@@ -104,15 +124,6 @@ public class SightingsDaoDB implements SightingsDao {
         return sightings;
     }
 
-public static final class SightingMapper implements RowMapper<Sighting> {
-
-@Override
-public Sighting mapRow(ResultSet rs, int index) throws SQLException {
-    Sighting sighting = new Sighting();
-    sighting.setDateOfSighting(Date.valueOf(rs.getDate("dateOfSighting").toString()).toLocalDate());
-    return sighting;
-        }
-    }
 }
 
 
