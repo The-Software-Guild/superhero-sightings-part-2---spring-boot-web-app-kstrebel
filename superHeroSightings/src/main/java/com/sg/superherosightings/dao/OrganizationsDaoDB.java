@@ -43,6 +43,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
             final String SELECT_ORGANIZATION_BY_ID = "SELECT * FROM organizations WHERE organizationID = ?";
             Organization organization = jdbc.queryForObject(SELECT_ORGANIZATION_BY_ID, new OrganizationMapper(), ID);
             organization.setAddress(getAddressForOrganization(organization));
+            organization.setMembers(getMembersForOrganization(organization));
             return organization;
         }
         catch (DataAccessException ex)
@@ -67,7 +68,7 @@ public class OrganizationsDaoDB implements OrganizationsDao {
         final String INSERT_ORGANIZATION = "INSERT INTO organizations(organizationName,organizationDescription, addressID) "
                 + "VALUES(?,?,?)";
         jdbc.update(INSERT_ORGANIZATION,
-                organization.getOrganizationID(),
+                organization.getOrganizationName(),
                 organization.getOrganizationDescription(),
                 organization.getAddress().getAddressID());
 
@@ -81,12 +82,12 @@ public class OrganizationsDaoDB implements OrganizationsDao {
     public void updateOrganization(Organization organization)
     {
         final String UPDATE_ORGANIZATION = "UPDATE organizations SET organizationName = ?, organizationDescription = ?, addressID = ?"
-                + " WHERE OrganizationID = ?";
+                + " WHERE organizationID = ?";
         jdbc.update(UPDATE_ORGANIZATION,
-                organization.getOrganizationID(),
+                organization.getOrganizationName(),
                 organization.getOrganizationDescription(),
-
-                organization.getAddress().getAddressID());
+                organization.getAddress().getAddressID(),
+                organization.getOrganizationID());
 
     }
 

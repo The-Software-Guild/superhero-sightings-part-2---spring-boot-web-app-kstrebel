@@ -69,15 +69,42 @@ public class Organization
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Organization that = (Organization) o;
-        return getOrganizationName().equals(that.getOrganizationName()) && getOrganizationDescription().equals(that.getOrganizationDescription()) && getAddress().equals(that.getAddress()) && Objects.equals(getMembers(), that.getMembers());
+
+        if (getOrganizationID() != that.getOrganizationID()) return false;
+        if (!getOrganizationName().equals(that.getOrganizationName())) return false;
+        if (!getOrganizationDescription().equals(that.getOrganizationDescription())) return false;
+        int addressID = getAddress().getAddressID();
+        int addressID2 = that.getAddress().getAddressID();
+        if (addressID != addressID2) return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getOrganizationName(), getOrganizationDescription(), getAddress(), getMembers());
+        int result = getOrganizationID();
+        result = 31 * result + getOrganizationName().hashCode();
+        result = 31 * result + getOrganizationDescription().hashCode();
+        result = 31 * result + getAddress().hashCode();
+        return result;
     }
 
+//    @Override
+//    public boolean equals(Object o) {
+//        if (this == o) return true;
+//        if (o == null || getClass() != o.getClass()) return false;
+//        Organization that = (Organization) o;
+//        return getOrganizationName().equals(that.getOrganizationName()) && getOrganizationDescription().equals(that.getOrganizationDescription())
+////                && getAddress().equals(that.getAddress())
+////                && Objects.equals(getMembers(), that.getMembers())
+//                ;
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(getOrganizationName(), getOrganizationDescription(), getAddress(), getMembers());
+//    }
 
 //    @Override
 //    public boolean equals(Object o) {
