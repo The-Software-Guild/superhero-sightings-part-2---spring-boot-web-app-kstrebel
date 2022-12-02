@@ -80,10 +80,7 @@ public class Controller {
     @Transactional
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateLocation(@PathVariable int locationID, @RequestBody Location location, Address address){
-        if (address != null){
-
-            location.setAddress(addressesDao.updateAddresses(address));
-        }
+        addressesDao.updateAddresses(address);
         locationsDao.updateLocation(location);
     }
 
@@ -91,9 +88,7 @@ public class Controller {
     @Transactional
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateOrganization(@PathVariable int organizationID, @RequestBody Organization organization, Address address){
-        if (address != null){
-            organization.setAddress(addressesDao.updateAddresses(address));
-        }
+        addressesDao.updateAddresses(address);
         organizationsDao.updateOrganization(organization);
     }
 
