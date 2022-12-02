@@ -1,9 +1,6 @@
 package com.sg.superherosightings.dao;
 
-import com.sg.superherosightings.models.Address;
-import com.sg.superherosightings.models.Location;
-import com.sg.superherosightings.models.Organization;
-import com.sg.superherosightings.models.Sighting;
+import com.sg.superherosightings.models.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class AddressesDaoDBTest {
 
     @Autowired
+    AddressesDao addressesDao;
+
+    @Autowired
     HeroesDao heroesDao;
+
+    @Autowired
+    LocationsDao locationsDao;
 
     @Autowired
     OrganizationsDao organizationsDao;
@@ -26,22 +29,21 @@ public class AddressesDaoDBTest {
     @Autowired
     SightingsDao sightingsDao;
 
-    @Autowired
-    AddressesDao addressesDao;
-
-    @Autowired
-    LocationsDao locationsDao;
-
     @BeforeEach
     void setUp() {
-        List<Address> addresses = addressesDao.getAllAddresses();
-        for (Address address : addresses) {
-            addressesDao.deleteAddressByID(address.getAddressID());
+        List<Organization> organizations = organizationsDao.getAllOrganizations();
+        for (Organization organization : organizations) {
+            organizationsDao.deleteOrganizationByID(organization.getOrganizationID());
         }
 
-        List<Organization> organizationList = organizationsDao.getAllOrganizations();
-        for(Organization organization : organizationList){
-            organizationsDao.deleteOrganizationByID(organization.getOrganizationID());
+        List<Hero> heroes = heroesDao.getAllHeroes();
+        for (Hero hero : heroes) {
+            heroesDao.deleteHeroesByID(hero.getHeroID());
+        }
+
+        List<Sighting> sightingList = sightingsDao.getAllSightings();
+        for(Sighting sighting : sightingList){
+            sightingsDao.deleteSightingByID(sighting.getSightingID());
         }
 
         List<Location> locationList = locationsDao.getAllLocations();
@@ -49,9 +51,9 @@ public class AddressesDaoDBTest {
             locationsDao.deleteLocationByID(location.getLocationID());
         }
 
-        List<Sighting> sightingList = sightingsDao.getAllSightings();
-        for(Sighting sighting : sightingList){
-            sightingsDao.deleteSightingByID(sighting.getSightingID());
+        List<Address> addresses = addressesDao.getAllAddresses();
+        for (Address address : addresses) {
+            addressesDao.deleteAddressByID(address.getAddressID());
         }
     }
 
