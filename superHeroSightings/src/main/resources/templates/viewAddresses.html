@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Addresses Page</title>
+
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <main>
+            <h1>List of Addresses</h1>
+            <a href="/NewAddress">Add a New Address</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Line 1</th>
+                        <th>Line 2</th>
+                        <th>City</th>
+                        <th>City</th>
+                        <th>Zip</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="address:${addressList}">
+                        <td><a th:href="@{'/EditAddress/' + ${address.addressID}}">Edit</a></td>
+                        <td th:text="${address.addressLine1}"></td>
+                        <td th:text="${address.addressLine2}"></td>
+                        <td th:text="${address.city}"></td>
+                        <td th:text="${address.stateAbbreviation}"></td>
+                        <td th:text="${address.zip}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </body>
+
+</html>
