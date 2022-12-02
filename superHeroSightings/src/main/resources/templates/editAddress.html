@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title th:text="@{${pagename} + ' Address'}"></title>
+
+        <link rel="stylesheet" href="styles.css">
+    </head>
+
+    <body>
+        <main>
+            <h1 th:text="@{${pagename} + ' Address'}"></h1>
+            <form action="#" th:action="@{/updateAddress}" method="post" th:object="${address}">
+                <!-- <legend >Add a New Address</legend> -->
+                <input type="hidden" id="addressID" name="addressID" th:value="${address.addressID}">
+                <label for="addressLine1">
+                    <span>Line 1: </span>
+                    <input type="text" id="addressLine1" name="addressLine1" placeholder="123 Main St" th:value="@{ ${pagename}=='Edit' ? ${address.addressLine1} : '' }">
+                </label>
+                <label for="addressLine2">
+                    <span>Line 2: </span>
+                    <input type="text" id="addressLine2" name="addressLine2" placeholder="Apt. 987 (Optional)" th:value="@{ ${pagename}=='Edit' ? ${address.addressLine2} : '' }">
+                </label>
+                <label for="city">
+                    <span>City: </span>
+                    <input type="text" id="city" name="city" placeholder="New York" th:value="@{ ${pagename}=='Edit' ? ${address.city} : '' }">
+                </label>
+                <label for="stateAbbreviation">
+                    <!--should probably make this a dropdown--->
+                    <span>State Abbreviation: </span>
+                    <input type="text" id="stateAbbreviation" name="stateAbbreviation" placeholder="NY" th:value="@{ ${pagename}=='Edit' ? ${address.stateAbbreviation} : '' }">
+                </label>
+                <label for="zip">
+                    <span>Zip Code: </span>
+                    <input type="number" id="zip" name="zip" placeholder="10001" th:value="@{ ${pagename}=='Edit' ? ${address.zip} : '' }">
+                </label>
+                <input type="reset" id="reset" value="Start Over">
+                <input type="submit" id="submit" th:value="@{ ${pagename} + ' Address' }">
+            </form>
+        </main>
+        <script>
+            const form = document.querySelector("form");
+            form.addEventListener("submit", submitForm);
+
+            function submitForm(event) {
+                event.preventDefault();
+
+                const data = new FormData(event.target);
+                const value = Object.fromEntries(data.entries());
+
+                fetch("/updateAddress", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(value)
+                });
+                //.then(function(response){
+                //    return response.json();
+                //}).then(function(data){
+                //    console.log(data);
+                //});
+            }
+        </script>
+    </body>
+
+</html>
