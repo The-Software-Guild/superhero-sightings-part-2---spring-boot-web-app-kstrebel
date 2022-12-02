@@ -26,6 +26,9 @@ public class SightingsDaoDB implements SightingsDao {
     @Autowired
     LocationsDao lDao;
 
+    @Autowired
+    AddressesDao aDao;
+
     public static final class SightingMapper implements RowMapper<Sighting> {
 
         @Override
@@ -43,9 +46,7 @@ public class SightingsDaoDB implements SightingsDao {
             final String SELECT_SIGHTING_BY_ID = "SELECT * FROM sightings WHERE sightingsID = ?";
             Sighting sighting = jdbc.queryForObject(SELECT_SIGHTING_BY_ID, new SightingMapper(), ID);
             sighting.setHero(getHeroForSighting(sighting));
-            System.out.println(sighting.getHero().getHeroID());
             sighting.setLocation(getLocationForSighting(sighting));
-            System.out.println(sighting.getLocation().getLocationID());
            return sighting;
         } catch (DataAccessException ex) {
             System.out.println("Data Access Exception");
@@ -57,7 +58,8 @@ public class SightingsDaoDB implements SightingsDao {
         final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM locations l " +
                 "JOIN sightings s ON s.locationID = l.locationID WHERE s.sightingsID = ?";
         Location location = jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationsDaoDB.LocationMapper(), sighting.getSightingID());
-        lDao.getAddressForLocation(location);
+        location.setAddress(lDao.getAddressForLocation(location));
+        assert location != null;
         return location;
     }
 
@@ -105,7 +107,8 @@ public class SightingsDaoDB implements SightingsDao {
         jdbc.update(UPDATE_SIGHTING,
                 sighting.getHero().getHeroID(),
                 sighting.getLocation().getLocationID(),
-                sighting.getDateOfSighting());
+                sighting.getDateOfSighting(),
+                sighting.getSightingID());
     }
 
     @Override

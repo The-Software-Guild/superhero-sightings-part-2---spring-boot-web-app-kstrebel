@@ -184,7 +184,6 @@ class LocationsDaoDBTest {
         Location fromDao = locationsDao.getLocationByID(location.getLocationID());
 
         assertNull(fromDao);
-
     }
 
     @Test

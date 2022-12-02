@@ -277,8 +277,9 @@ class SightingsDaoDBTest {
         sighting.setDateOfSighting(LocalDate.parse("2022-01-01"));
         sighting = sightingsDao.addSighting(sighting);
 
+        sightingsDao.deleteSightingByID(sighting.getSightingID());
         Sighting fromDao = sightingsDao.getSightingByID(sighting.getSightingID());
-        assertEquals(sighting,fromDao);
+        assertNull(fromDao);
     }
 
     @Test

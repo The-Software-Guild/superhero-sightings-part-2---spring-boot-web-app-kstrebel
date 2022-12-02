@@ -12,6 +12,4 @@ public interface AddressesDao {
     int updateAddresses(Address address);
     void deleteAddressByID (int ID);
 
-
-
 }
