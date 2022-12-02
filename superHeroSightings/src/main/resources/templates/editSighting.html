@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title th:text="@{${pagename} + ' Sighting'}"></title>
+
+        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <main>
+            <h1 th:text="@{${pagename} + ' Sighting'}"></h1>
+            <form id="pre" action="#" th:action="@{Sighting/update}" method="post" th:object="${sighting}">
+                <!-- <legend >Add a New Sighting</legend> -->
+                <input type="hidden" id="sightingID" name="sightingID" th:value="${sighting.sightingID}">
+                <label for="hero">
+                    <span>Hero: </span>
+                    <select id="hero" name="hero" th:each="hero:${heroList}">
+                        <option th:text="$hero:heroNane" th:value="${hero:heroID}"></option>
+                </label>
+                <label for="location">
+                    <span>Location: </span>
+                    <select id="location" name="location">
+                </label>
+                <label for="dateOfSighting">
+                    <span>Date Sighted: </span>
+                    <input type="text" id="dateOfSighting" name="dateOfSighting">
+                </label>
+                <input type="reset" id="reset" value="Start Over">
+                <input type="submit" id="submit" th:value="@{ ${pagename} + ' Sighting' }">
+            </form>
+            <div id="post">
+                <p>Sighting successfully added.</p>
+                <button onclick="window.location.href='/Sighting/'">Return to list of sightings</button>
+            </div>
+        </main>
+        <script>
+            const form = document.querySelector("form");
+            form.addEventListener("submit", submitForm);
+
+            const pre = document.getElementById("pre");
+            const post = document.getElementById("post");
+
+            post.hidden = true;
+
+            function submitForm(event) {
+                event.preventDefault();
+
+                const data = new FormData(event.target);
+                const value = Object.fromEntries(data.entries());
+
+                fetch("/Sighting/update", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(value)
+                })
+                    .then(function (response) {
+                        //    return response.json();
+                        //}).then(function(data){
+                        //    console.log(data);
+
+                        pre.hidden = true;
+                        post.hidden = false;
+                    });
+            }
+        </script>
+    </body>
+
+</html>

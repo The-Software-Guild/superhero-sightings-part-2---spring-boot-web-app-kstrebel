@@ -18,7 +18,7 @@ import java.util.List;
 public class HeroesDaoDB  implements HeroesDao {
 
     @Autowired
-    JdbcTemplate jdbc;
+    JdbcTemplate jdbc=new JdbcTemplate();
 
     @Autowired
     OrganizationsDao oDao;
