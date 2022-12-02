@@ -14,7 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class LocationsDaoDBTest {
     @Autowired
+    AddressesDao addressesDao;
+
+    @Autowired
     HeroesDao heroesDao;
+
+    @Autowired
+    LocationsDao locationsDao;
 
     @Autowired
     OrganizationsDao organizationsDao;
@@ -22,21 +28,21 @@ class LocationsDaoDBTest {
     @Autowired
     SightingsDao sightingsDao;
 
-    @Autowired
-    AddressesDao addressesDao;
-
-    @Autowired
-    LocationsDao locationsDao;
-
-    public LocationsDaoDBTest(){
-
-    }
-
     @BeforeEach
-    void setUp(){
-        List<Address> addresses = addressesDao.getAllAddresses();
-        for (Address address : addresses) {
-            addressesDao.deleteAddressByID(address.getAddressID());
+    void setUp() {
+        List<Organization> organizations = organizationsDao.getAllOrganizations();
+        for (Organization organization : organizations) {
+            organizationsDao.deleteOrganizationByID(organization.getOrganizationID());
+        }
+
+        List<Hero> heroes = heroesDao.getAllHeroes();
+        for (Hero hero : heroes) {
+            heroesDao.deleteHeroesByID(hero.getHeroID());
+        }
+
+        List<Sighting> sightingList = sightingsDao.getAllSightings();
+        for(Sighting sighting : sightingList){
+            sightingsDao.deleteSightingByID(sighting.getSightingID());
         }
 
         List<Location> locationList = locationsDao.getAllLocations();
@@ -44,9 +50,9 @@ class LocationsDaoDBTest {
             locationsDao.deleteLocationByID(location.getLocationID());
         }
 
-        List<Sighting> sightingList = sightingsDao.getAllSightings();
-        for(Sighting sighting : sightingList){
-            sightingsDao.deleteSightingByID(sighting.getSightingID());
+        List<Address> addresses = addressesDao.getAllAddresses();
+        for (Address address : addresses) {
+            addressesDao.deleteAddressByID(address.getAddressID());
         }
     }
 

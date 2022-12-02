@@ -132,19 +132,19 @@ public class AddressesDaoDB implements AddressesDao {
             organization = null;
         }
 
-        // remove the location/organization where the address is a foreign key 2 steps
-        // Then remove sightings or members where location/organization is a foreign key
-        //FInally remove the location/organization
+//        // remove the location/organization where the address is a foreign key 2 steps
+//        // Then remove sightings or members where location/organization is a foreign key
+//        //Finally remove the location/organization
        if (location != null) {
-           final String REMOVE_LOCATION_FROM_SIGHTINGS = "SELECT * FROM sightings WHERE locationID = ?";
+           final String REMOVE_LOCATION_FROM_SIGHTINGS = "DELETE FROM sightings WHERE locationID = ?";
            jdbc.update(REMOVE_LOCATION_FROM_SIGHTINGS,location.getLocationID());
-           final String REMOVE_LOCATION = "SELECT * from locations WHERE addressID = ?";
+           final String REMOVE_LOCATION = "DELETE FROM locations WHERE addressID = ?";
            jdbc.update(REMOVE_LOCATION, ID);
        }
        if (organization != null){
-           final String REMOVE_ORGANIZATION_FROM_MEMBERS = "SELECT * FROM members WHERE organizationID =?";
+           final String REMOVE_ORGANIZATION_FROM_MEMBERS = "DELETE FROM members WHERE organizationID = ?";
            jdbc.update(REMOVE_ORGANIZATION_FROM_MEMBERS, organization.getOrganizationID());
-           final String REMOVE_ORGANIZATION = "SELECT * FROM organizations WHERE addressID =?";
+           final String REMOVE_ORGANIZATION = "DELETE FROM organizations WHERE addressID = ?";
            jdbc.update(REMOVE_ORGANIZATION, ID);
        }
 

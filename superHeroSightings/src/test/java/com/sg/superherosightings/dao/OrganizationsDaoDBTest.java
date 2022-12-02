@@ -32,9 +32,9 @@ class OrganizationsDaoDBTest {
 
     @BeforeEach
     void setUp() {
-        List<Address> addresses = addressesDao.getAllAddresses();
-        for (Address address : addresses) {
-            addressesDao.deleteAddressByID(address.getAddressID());
+        List<Organization> organizations = organizationsDao.getAllOrganizations();
+        for (Organization organization : organizations) {
+            organizationsDao.deleteOrganizationByID(organization.getOrganizationID());
         }
 
         List<Hero> heroes = heroesDao.getAllHeroes();
@@ -42,9 +42,19 @@ class OrganizationsDaoDBTest {
             heroesDao.deleteHeroesByID(hero.getHeroID());
         }
 
-        List<Organization> organizations = organizationsDao.getAllOrganizations();
-        for (Organization organization : organizations) {
-            organizationsDao.deleteOrganizationByID(organization.getOrganizationID());
+        List<Sighting> sightingList = sightingsDao.getAllSightings();
+        for(Sighting sighting : sightingList){
+            sightingsDao.deleteSightingByID(sighting.getSightingID());
+        }
+
+        List<Location> locationList = locationsDao.getAllLocations();
+        for(Location location : locationList){
+            locationsDao.deleteLocationByID(location.getLocationID());
+        }
+
+        List<Address> addresses = addressesDao.getAllAddresses();
+        for (Address address : addresses) {
+            addressesDao.deleteAddressByID(address.getAddressID());
         }
     }
 
@@ -93,6 +103,13 @@ class OrganizationsDaoDBTest {
         address.setZip("11111");
         address = addressesDao.addAddresses(address);
 
+        Address address2 = new Address();
+        address2.setAddressLine1("Test addressLine1 2");
+        address2.setCity("Test city 2");
+        address2.setStateAbbreviation("T2");
+        address2.setZip("11112");
+        address2 = addressesDao.addAddresses(address2);
+
         Hero hero = new Hero();
         hero.setHeroName("Test Hero Name");
         hero.setHeroDescription("Test description");
@@ -111,7 +128,7 @@ class OrganizationsDaoDBTest {
 
         Organization organization2 = new Organization();
         organization2.setOrganizationName("Test org 2");
-        organization2.setAddress(address);
+        organization2.setAddress(address2);
         organization2.setOrganizationDescription("Test org description 2");
         organization2.setMembers(heroes);
         organization2 = organizationsDao.addOrganization(organization2);
