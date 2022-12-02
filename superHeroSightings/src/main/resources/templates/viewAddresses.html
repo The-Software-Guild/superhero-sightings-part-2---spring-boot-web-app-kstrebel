@@ -22,13 +22,14 @@
                         <th>Line 1</th>
                         <th>Line 2</th>
                         <th>City</th>
-                        <th>City</th>
+                        <th>State</th>
                         <th>Zip</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="address:${addressList}">
                         <td><a th:href="@{'/EditAddress/' + ${address.addressID}}">Edit</a></td>
+                        <td><a th:href="@{'/DeleteAddress/' + ${address.addressID}}">Delete</a></td>
                         <td th:text="${address.addressLine1}"></td>
                         <td th:text="${address.addressLine2}"></td>
                         <td th:text="${address.city}"></td>
