@@ -4,12 +4,14 @@ import com.sg.superherosightings.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class LocationsDaoDBTest {
     @Autowired
     HeroesDao heroesDao;
@@ -32,9 +34,19 @@ class LocationsDaoDBTest {
 
     @BeforeEach
     void setUp(){
+        List<Address> addresses = addressesDao.getAllAddresses();
+        for (Address address : addresses) {
+            addressesDao.deleteAddressByID(address.getAddressID());
+        }
+
         List<Location> locationList = locationsDao.getAllLocations();
         for(Location location : locationList){
             locationsDao.deleteLocationByID(location.getLocationID());
+        }
+
+        List<Sighting> sightingList = sightingsDao.getAllSightings();
+        for(Sighting sighting : sightingList){
+            sightingsDao.deleteSightingByID(sighting.getSightingID());
         }
     }
 
@@ -44,10 +56,9 @@ class LocationsDaoDBTest {
         address.setAddressLine1("Test Address Line 1");
         address.setAddressLine2("Test Address Line 2");
         address.setCity("Test city");
-        address.setStateAbbreviation("Test");
-        address.setZip("Test Zip");
+        address.setStateAbbreviation("AA");
+        address.setZip("11111");
         address = addressesDao.addAddresses(address);
-
 
         Location location = new Location();
         location.setAddress(address);
@@ -67,18 +78,17 @@ class LocationsDaoDBTest {
         address.setAddressLine1("Test Address Line 1");
         address.setAddressLine2("Test Address Line 2");
         address.setCity("Test city");
-        address.setStateAbbreviation("Test");
-        address.setZip("Test Zip");
+        address.setStateAbbreviation("AA");
+        address.setZip("11111");
         address = addressesDao.addAddresses(address);
 
         Address address2 = new Address();
         address2.setAddressLine1("2Test Address Line 1");
         address2.setAddressLine2("2Test Address Line 2");
         address2.setCity("Test city 2");
-        address2.setStateAbbreviation("Te2");
-        address2.setZip("Test Zip 2");
+        address2.setStateAbbreviation("BB");
+        address2.setZip("11111");
         address2 = addressesDao.addAddresses(address2);
-
 
         Location location = new Location();
         location.setAddress(address);
@@ -101,7 +111,6 @@ class LocationsDaoDBTest {
         assertEquals(2, locations.size());
         assertTrue(locations.contains(location));
         assertTrue(locations.contains(location2));
-
     }
 
     @Test
@@ -110,8 +119,8 @@ class LocationsDaoDBTest {
         address.setAddressLine1("Test Address Line 1");
         address.setAddressLine2("Test Address Line 2");
         address.setCity("Test city");
-        address.setStateAbbreviation("Test");
-        address.setZip("Test Zip");
+        address.setStateAbbreviation("AA");
+        address.setZip("11111");
         address = addressesDao.addAddresses(address);
 
 
@@ -147,8 +156,8 @@ class LocationsDaoDBTest {
         address.setAddressLine1("Test Address Line 1");
         address.setAddressLine2("Test Address Line 2");
         address.setCity("Test city");
-        address.setStateAbbreviation("Test");
-        address.setZip("Test Zip");
+        address.setStateAbbreviation("AA");
+        address.setZip("11111");
         address = addressesDao.addAddresses(address);
 
         Location location = new Location();
@@ -178,8 +187,8 @@ class LocationsDaoDBTest {
         address.setAddressLine1("Test Address Line 1");
         address.setAddressLine2("Test Address Line 2");
         address.setCity("Test city");
-        address.setStateAbbreviation("Test");
-        address.setZip("Test Zip");
+        address.setStateAbbreviation("AA");
+        address.setZip("11111");
         address = addressesDao.addAddresses(address);
 
         Location location = new Location();
