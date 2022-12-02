@@ -100,10 +100,10 @@ public class AddressesDaoDB implements AddressesDao {
     }
 
     @Override
-    public int updateAddresses(Address address) {
+    public void updateAddresses(Address address) {
         final String UPDATE_ADDRESS = "UPDATE addresses SET addressLine1 = ?, addressLine2 = ?, city = ?, stateAbbreviation = ?, zip = ?"
                 + "WHERE addressID = ?";
-        return jdbc.update(UPDATE_ADDRESS,
+        jdbc.update(UPDATE_ADDRESS,
                 address.getAddressLine1(),
                 address.getAddressLine2(),
                 address.getCity(),
