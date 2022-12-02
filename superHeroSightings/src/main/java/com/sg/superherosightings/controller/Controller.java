@@ -141,9 +141,15 @@ public class Controller {
         sightingsDao.deleteSightingByID(sightingID);
     }
 
-    @GetMapping("/allHeroes")
-    public List<Hero> getAllHeroes() {
+    @GetMapping("/heroes")
+    public List<Hero> getAllHeroes()
+    {
         return heroesDao.getAllHeroes();
+    }
+
+    @GetMapping("/addresses")
+    public List<Address> getAllAddresses() {
+        return addressesDao.getAllAddresses();
     }
 
     @GetMapping("/locations")

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.sg.superherosightings.dao.AddressesDao;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
 @Controller
+@RequestMapping("/Address")
 public class AddressController
 {
     AddressesDao addressesDao = new AddressesDaoDB();
@@ -29,7 +31,7 @@ public class AddressController
         this.addressesDao = addressesDao;
     }
 
-    @GetMapping("/Addresses")
+    @GetMapping("/")
     public String viewAddresses(Model model)
     {
         model.addAttribute("addressList", addressesDao.getAllAddresses());
@@ -38,7 +40,7 @@ public class AddressController
     }
 
     
-    @GetMapping("/NewAddress")
+    @GetMapping("/New")
     public String addAddress(Model model)
     {
         Address address = new Address();
@@ -50,7 +52,7 @@ public class AddressController
         return "editAddress";
     }
 
-    @GetMapping("/EditAddress/{addressID}")
+    @GetMapping("/Edit/{addressID}")
     public String editAddress(Model model, @PathVariable int addressID)
     {
         model.addAttribute("pagename", "Edit");
@@ -59,7 +61,7 @@ public class AddressController
         return "editAddress";
     }
     
-    @GetMapping("/DeleteAddress/{addressID}")
+    @GetMapping("/Delete/{addressID}")
     public String deleteAddress(Model model, @PathVariable int addressID)
     {
         model.addAttribute("address", addressesDao.getAddressesByID(addressID));
@@ -67,7 +69,7 @@ public class AddressController
         return "deleteAddress";
     }
 
-    @PostMapping("/updateAddress")
+    @PostMapping("/update")
     public ResponseEntity updateAddress(@RequestBody Address address, Model model)
     {
         try
@@ -91,7 +93,7 @@ public class AddressController
         }
     }
 
-    @DeleteMapping("/deleteAddress/{addressID}")
+    @DeleteMapping("/delete/{addressID}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteAddress(@PathVariable int addressID)
     {
