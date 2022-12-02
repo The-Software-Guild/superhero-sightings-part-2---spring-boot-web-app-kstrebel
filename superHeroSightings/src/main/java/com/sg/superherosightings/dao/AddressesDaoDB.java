@@ -94,21 +94,15 @@ public class AddressesDaoDB implements AddressesDao {
 
     @Override
     public int updateAddresses(Address address) {
-
-        try {
-            final String UPDATE_ADDRESS = "UPDATE addresses SET addressLine1 = ?, addressLine2 = ?, city = ?, stateAbbreviation = ?, zip = ?"
-                    + "WHERE addressID = ?";
-            jdbc.update(UPDATE_ADDRESS,
-                    address.getAddressLine1(),
-                    address.getAddressLine2(),
-                    address.getCity(),
-                    address.getStateAbbreviation(),
-                    address.getZip(),
-                    address.getAddressID());
-            return 1;}
-        catch (Exception e){
-            return 0;
-        }
+        final String UPDATE_ADDRESS = "UPDATE addresses SET addressLine1 = ?, addressLine2 = ?, city = ?, stateAbbreviation = ?, zip = ?"
+                + "WHERE addressID = ?";
+        return jdbc.update(UPDATE_ADDRESS,
+                address.getAddressLine1(),
+                address.getAddressLine2(),
+                address.getCity(),
+                address.getStateAbbreviation(),
+                address.getZip(),
+                address.getAddressID());
     }
 
     @Override

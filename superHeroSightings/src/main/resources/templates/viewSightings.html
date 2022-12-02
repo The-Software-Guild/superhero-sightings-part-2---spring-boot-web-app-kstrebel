@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Sightings Page</title>
+
+        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <main>
+            <h1>List of Sightings</h1>
+            <a href="New">Add a New Sighting</a>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>Hero</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="sighting:${sightingList}">
+                        <td><a th:href="@{'Edit/' + ${sighting.sightingID}}">Edit</a></td>
+                        <td><a th:href="@{'Delete/' + ${sighting.sightingID}}">Delete</a></td>
+                        <td th:text="${sighting.hero}"></td>
+                        <td th:text="${sighting.location}"></td>
+                        <td th:text="${sighting.dateOfSighting}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
+    </body>
+
+</html>
