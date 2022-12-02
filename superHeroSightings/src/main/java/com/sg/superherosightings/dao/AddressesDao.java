@@ -9,7 +9,7 @@ public interface AddressesDao {
     Address getAddressesByID (int ID);
     List<Address> getAllAddresses();
     Address addAddresses(Address address);
-    void updateAddresses(Address address);
+    int updateAddresses(Address address);
     void deleteAddressByID (int ID);
 
 
