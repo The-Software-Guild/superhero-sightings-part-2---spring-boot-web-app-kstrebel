@@ -78,6 +78,9 @@ class OrganizationsDaoDBTest {
         organization = organizationsDao.addOrganization(organization);
 
         Organization fromDao = organizationsDao.getOrganizationByID(organization.getOrganizationID());
+        int memberNum = fromDao.getMembers().size();
+        assertEquals(1, memberNum);
+        assertEquals("Test org", fromDao.getOrganizationName());
         assertEquals(organization, fromDao);
     }
 
@@ -113,10 +116,14 @@ class OrganizationsDaoDBTest {
         organization2.setMembers(heroes);
         organization2 = organizationsDao.addOrganization(organization2);
 
-        List<Organization> organizations = organizationsDao.getAllOrganizations();
-        assertEquals(2, organizations.size());
-        assertTrue(organizations.contains(organization));
-        assertTrue(organizations.contains(organization2));
+        List<Organization> organizations = new ArrayList<>();
+        organizations.add(organization);
+        organizations.add(organization2);
+
+        List<Organization> fromDao = organizationsDao.getAllOrganizations();
+        assertEquals(2, fromDao.size());
+        assertTrue(fromDao.contains(organization));
+        assertTrue(fromDao.contains(organization2));
     }
 
     @Test
@@ -301,59 +308,4 @@ class OrganizationsDaoDBTest {
 
 
     }
-
-//    @Test
-//    public void testGetOrganizationsForHero() {
-//        Address address = new Address();
-//        address.setAddressLine1("Test addressLine1");
-//        address.setCity("Test city");
-//        address.setStateAbbreviation("TE");
-//        address.setZip("11111");
-//        address = addressesDao.addAddresses(address);
-//
-//        Hero hero = new Hero();
-//        hero.setHeroName("Test Hero Name");
-//        hero.setHeroDescription("Test description");
-//        hero.setSuperPower("Test Superpower");
-//        hero = heroesDao.addHeroes(hero);
-//
-//        Hero hero2 = new Hero();
-//        hero2.setHeroName("Test Hero Name 2");
-//        hero2.setHeroDescription("Test description 2");
-//        hero2.setSuperPower("Test Superpower 2");
-//        hero2 = heroesDao.addHeroes(hero2);
-//
-//        List<Hero> heroes = new ArrayList<>();
-//        heroes.add(hero);
-//
-//        List<Hero> heroes2 = new ArrayList<>();
-//        heroes.add(hero2);
-//
-//        Organization organization = new Organization();
-//        organization.setOrganizationName("Test org");
-//        organization.setAddress(address);
-//        organization.setOrganizationDescription("Test org description");
-//        organization.setMembers(heroes);
-//        organization = organizationsDao.addOrganization(organization);
-//
-//        Organization organization2 = new Organization();
-//        organization2.setOrganizationName("Test org 2");
-//        organization2.setAddress(address);
-//        organization2.setOrganizationDescription("Test org description 2");
-//        organization2.setMembers(heroes2);
-//        organization2 = organizationsDao.addOrganization(organization2);
-//
-//        Organization organization3 = new Organization();
-//        organization3.setOrganizationName("Test org 3");
-//        organization3.setAddress(address);
-//        organization3.setOrganizationDescription("Test org description 3");
-//        organization3.setMembers(heroes);
-//        organization3 = organizationsDao.addOrganization(organization3);
-//
-//        List<Organization> organizations = organizationsDao.getMembersForOrganization(hero);
-//        assertEquals(2, organizations.size());
-//        assertTrue(organizations.contains(organization));
-//        assertFalse(organizations.contains(organization2));
-//        assertTrue(organizations.contains(organization3));
-//    }
 }
