@@ -126,7 +126,7 @@ public class AddressesDaoDB implements AddressesDao {
             location = null;
         }
         try{
-            final String FIND_ORGANIZATION_FOR_ADDRESS = "SELECT * FROM organizations WHERE addressID =?";
+            final String FIND_ORGANIZATION_FOR_ADDRESS = "SELECT * FROM organizations WHERE addressID = ?";
             organization = jdbc.queryForObject(FIND_ORGANIZATION_FOR_ADDRESS, new OrganizationsDaoDB.OrganizationMapper(), ID);
         } catch (DataAccessException ex){
             organization = null;
@@ -136,7 +136,7 @@ public class AddressesDaoDB implements AddressesDao {
         // Then remove sightings or members where location/organization is a foreign key
         //FInally remove the location/organization
        if (location != null) {
-           final String REMOVE_LOCATION_FROM_SIGHTINGS = "SELECT * FROM sightings WHERE locationID =?";
+           final String REMOVE_LOCATION_FROM_SIGHTINGS = "SELECT * FROM sightings WHERE locationID = ?";
            jdbc.update(REMOVE_LOCATION_FROM_SIGHTINGS,location.getLocationID());
            final String REMOVE_LOCATION = "SELECT * from locations WHERE addressID = ?";
            jdbc.update(REMOVE_LOCATION, ID);

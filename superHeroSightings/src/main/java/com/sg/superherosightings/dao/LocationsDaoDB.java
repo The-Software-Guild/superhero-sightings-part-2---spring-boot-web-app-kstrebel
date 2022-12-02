@@ -20,6 +20,12 @@ public class LocationsDaoDB implements LocationsDao
     @Autowired
     JdbcTemplate jdbc;
 
+    @Autowired
+    AddressesDao adao;
+
+    @Autowired
+    SightingsDao sDao;
+
     @Override
     public Location getLocationByID(int ID) {
         try {
@@ -60,23 +66,27 @@ public class LocationsDaoDB implements LocationsDao
 
     @Override
     public void updateLocation(Location location) {
-        final String UPDATE_LOCATION = "UPDATE locations SET locationID =? locationName = ?, locationDescription = ?, " +
-                "addressID = ?, locationLatitude = ?, locationLongitude = ?"
+
+        final String UPDATE_LOCATION = "UPDATE locations SET locationName = ?, locationDescription = ?, " +
+                "addressID = ?, locationLatitude = ?, locationLongitude = ? "
                 + "WHERE locationID = ?";
         jdbc.update(UPDATE_LOCATION,
-                location.getLocationID(),
                 location.getLocationName(),
                 location.getLocationDescription(),
                 location.getAddress().getAddressID(),
                 location.getLocationLatitude(),
-                location.getLocationLongitude());
+                location.getLocationLongitude(),
+                location.getLocationID());
     }
 
     @Override
+    @Transactional
     public void deleteLocationByID(int ID) {
-        final String DELETE_LOCATION = "DELETE FROM locations WHERE lpcationID = ?";
-        jdbc.update(DELETE_LOCATION, ID);
+        final String DELETE_SIGHTING = "DELETE FROM sightings WHERE locationID = ?";
+        jdbc.update(DELETE_SIGHTING, ID);
 
+        final String DELETE_LOCATION = "DELETE FROM locations WHERE locationID = ?";
+        jdbc.update(DELETE_LOCATION, ID);
     }
 
     @Override
