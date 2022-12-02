@@ -80,7 +80,10 @@ public class Controller {
     @Transactional
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateLocation(@PathVariable int locationID, @RequestBody Location location, Address address){
-        addressesDao.updateAddresses(address);
+        if (address != null){
+
+            //location.setAddress(addressesDao.updateAddresses(address));
+        }
         locationsDao.updateLocation(location);
     }
 
