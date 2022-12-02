@@ -14,7 +14,7 @@
     <body>
         <main>
             <h1 th:text="@{${pagename} + ' Address'}"></h1>
-            <form action="#" th:action="@{Address/update}" method="post" th:object="${address}">
+            <form id="pre" action="#" th:action="@{Address/update}" method="post" th:object="${address}">
                 <!-- <legend >Add a New Address</legend> -->
                 <input type="hidden" id="addressID" name="addressID" th:value="${address.addressID}">
                 <label for="addressLine1">
@@ -41,10 +41,20 @@
                 <input type="reset" id="reset" value="Start Over">
                 <input type="submit" id="submit" th:value="@{ ${pagename} + ' Address' }">
             </form>
+            <div id="post">
+                <p>Address successfully added.</p>
+                <button onclick="window.location.href='/Address/'">Return to list of addresses</button>
+
+            </div>
         </main>
         <script>
             const form = document.querySelector("form");
             form.addEventListener("submit", submitForm);
+
+            const pre = document.getElementById("pre");
+            const post = document.getElementById("post");
+
+            post.hidden = true;
 
             function submitForm(event) {
                 event.preventDefault();
@@ -52,16 +62,19 @@
                 const data = new FormData(event.target);
                 const value = Object.fromEntries(data.entries());
 
-                fetch("Address/update", {
+                fetch("/Address/update", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(value)
-                });
-                //.then(function(response){
-                //    return response.json();
-                //}).then(function(data){
-                //    console.log(data);
-                //});
+                })
+                    .then(function (response) {
+                        //    return response.json();
+                        //}).then(function(data){
+                        //    console.log(data);
+
+                        pre.hidden = true;
+                        post.hidden = false;
+                    });
             }
         </script>
     </body>

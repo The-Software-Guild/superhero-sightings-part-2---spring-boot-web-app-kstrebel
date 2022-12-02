@@ -17,14 +17,17 @@
             <table>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Line 1</th>
                         <th>Line 2</th>
                         <th>City</th>
+                        <th>State</th>
                         <th>Zip</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td id="addressID" th:text="${address.addressID}"></td>
                         <td th:text="${address.addressLine1}"></td>
                         <td th:text="${address.addressLine2}"></td>
                         <td th:text="${address.city}"></td>
@@ -36,26 +39,40 @@
 
             <br>
             <p>Are you sure you want to delete this address?</p>
-            <button id="confirm">Yes</button>
-            <button onclick="window.location.href='/Address/'">No</button>
+            <div id="pre">
+                <button id="confirm">Yes</button>
+                <button onclick="window.location.href='/Address/'">No</button>
+            </div>
+            <div id="post">
+                <p>Address successfully deleted.</p>
+                <button onclick="window.location.href='/Address/'">Return to list of addresses</button>
+
+            </div>
         </main>
         <script>
             const button = document.getElementById("confirm");
-            form.addEventListener("click", deleteAddress);
+            button.addEventListener("click", deleteAddress);
+
+            const pre=document.getElementById("pre");
+            const post=document.getElementById("post");
+
+            post.hidden=true;
 
             function deleteAddress(event) {
                 event.preventDefault();
 
-                fetch("Address/delete", {
+                fetch("/Address/delete/" + document.getElementById("addressID").innerText, {
                     method: "DELETE",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(value)
-                });
-                //.then(function(response){
+                })
+                .then(function(response){
                 //    return response.json();
                 //}).then(function(data){
-                //    console.log(data);
-                //});
+                    //console.log(data);
+
+                    pre.hidden=true;
+                    post.hidden=false;
+                });
             }
 
         </script>
