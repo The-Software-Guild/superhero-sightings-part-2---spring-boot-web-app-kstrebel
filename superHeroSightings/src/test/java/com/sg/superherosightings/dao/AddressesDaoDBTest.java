@@ -3,6 +3,7 @@ package com.sg.superherosightings.dao;
 import com.sg.superherosightings.models.Address;
 import com.sg.superherosightings.models.Location;
 import com.sg.superherosightings.models.Organization;
+import com.sg.superherosightings.models.Sighting;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -46,6 +47,11 @@ public class AddressesDaoDBTest {
         List<Location> locationList = locationsDao.getAllLocations();
         for(Location location : locationList){
             locationsDao.deleteLocationByID(location.getLocationID());
+        }
+
+        List<Sighting> sightingList = sightingsDao.getAllSightings();
+        for(Sighting sighting : sightingList){
+            sightingsDao.deleteSightingByID(sighting.getSightingID());
         }
     }
 
