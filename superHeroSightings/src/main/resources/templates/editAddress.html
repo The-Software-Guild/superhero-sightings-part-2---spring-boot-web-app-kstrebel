@@ -7,13 +7,14 @@
 
         <title th:text="@{${pagename} + ' Address'}"></title>
 
-        <link rel="stylesheet" href="styles.css">
+        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     </head>
 
     <body>
         <main>
             <h1 th:text="@{${pagename} + ' Address'}"></h1>
-            <form action="#" th:action="@{/updateAddress}" method="post" th:object="${address}">
+            <form action="#" th:action="@{Address/update}" method="post" th:object="${address}">
                 <!-- <legend >Add a New Address</legend> -->
                 <input type="hidden" id="addressID" name="addressID" th:value="${address.addressID}">
                 <label for="addressLine1">
@@ -51,7 +52,7 @@
                 const data = new FormData(event.target);
                 const value = Object.fromEntries(data.entries());
 
-                fetch("/updateAddress", {
+                fetch("Address/update", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(value)
